@@ -1,0 +1,8 @@
+{
+  "loop": "repo-closed-loop",
+  "agent": "claude-laptop",
+  "started": "2026-08-23T09:20:55Z", "ended": "2026-08-23T09:20:55Z",
+  "status": "skipped",
+  "prs_opened": 0, "prs_merged": 0, "prs_closed": 0, "tests_added": 0,
+  "repos_touched": [], "errors": []
+}
