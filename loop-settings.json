@@ -2,7 +2,7 @@
   "version": 2,
   "merge_policy": {
     "auto_merge_cap_per_run": 5,
-    "auto_merge_weekly_cap": 10,
+    "auto_merge_weekly_cap": 20,
     "budget_reset": "monday_00:00_local",
     "budget_source": "github_truth",
     "budget_counts": "agent_marker_prs_only",
