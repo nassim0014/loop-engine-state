@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "merge_policy": {
+    "auto_merge_cap_per_run": 5,
+    "auto_merge_weekly_cap": 10,
+    "budget_reset": "monday_00:00_local",
+    "budget_source": "github_truth",
+    "budget_counts": "agent_marker_prs_only",
+    "stale_pr_days": 7,
+    "max_pr_diff_lines": 400,
+    "forbidden_paths": [
+      ".github/workflows/**",
+      "**/conftest.py",
+      "requirements*.txt",
+      "pyproject.toml",
+      "poetry.lock",
+      "uv.lock",
+      "package.json",
+      "package-lock.json",
+      "pnpm-lock.yaml",
+      "yarn.lock",
+      ".pre-commit-config.yaml",
+      "**/auth/**",
+      "**/security/**",
+      "**/secrets/**"
+    ]
+  },
+  "rotation_policy": {
+    "repos_per_run": 2,
+    "items_per_repo": 1
+  },
+  "genesis": {
+    "cadence_days": 28,
+    "min_days_between_runs": 27,
+    "duplicate_guard_days": 21,
+    "stale_lease_hours": 6
+  },
+  "markers": {
+    "agents": [
+      "claude",
+      "z-ai"
+    ]
+  },
+  "review": {
+    "dependabot_rebase_attempts": 2,
+    "pr_ci_poll_minutes": 20
+  }
+}

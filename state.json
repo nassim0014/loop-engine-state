@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "updated_at": "2026-08-23T08:30:25+00:00",
+  "rotation_cursor": 3,
+  "loops": {
+    "repo-closed-loop": {
+      "last_run": "2026-08-22T00:00:00+00:00",
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "repo-review-loop": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "repo-open-loop": {
+      "last_run": "2026-08-22T00:00:00+00:00",
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "repo-genesis-loop": {
+      "last_run": "2026-08-19T00:00:00+00:00",
+      "status": "paused",
+      "consecutive_failures": 0,
+      "notes": "Paused by owner until the 2d crash test passes."
+    },
+    "loop-engine-digest": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "repo-backlog-refresh": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "kinz-competitor-analyst": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "cloud-kinz-improvement": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "cloud-daily-commit": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "cloud-weekly-status": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    }
+  },
+  "merge_budget": {
+    "week_iso": "2026-W34",
+    "merges_this_week": 0,
+    "opened_this_week": 0
+  }
+}

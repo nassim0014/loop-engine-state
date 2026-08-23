@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "run-record.schema.json",
+  "title": "Loop Run Record",
+  "type": "object",
+  "required": ["loop", "agent", "started", "ended", "status"],
+  "properties": {
+    "loop": { "type": "string" },
+    "agent": { "enum": ["claude-laptop", "zai-sandbox", "zai-cloud"] },
+    "started": { "type": "string", "format": "date-time" },
+    "ended": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["success", "partial", "failed", "skipped"] },
+    "prs_opened": { "type": "integer", "minimum": 0 },
+    "prs_merged": { "type": "integer", "minimum": 0 },
+    "prs_closed": { "type": "integer", "minimum": 0 },
+    "tests_added": { "type": "integer", "minimum": 0 },
+    "repos_touched": { "type": "array", "items": { "type": "string" } },
+    "errors": { "type": "array", "items": { "type": "string" } }
+  }
+}

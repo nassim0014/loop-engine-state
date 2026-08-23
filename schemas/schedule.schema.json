@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schedule.schema.json",
+  "title": "Loop Schedule",
+  "type": "object",
+  "required": ["version", "loops"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "timezone_default": { "type": "string" },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "agent", "schedule", "timezone", "enabled"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "agent": { "enum": ["claude-laptop", "zai-sandbox", "zai-cloud"] },
+          "schedule": { "type": "string", "minLength": 1 },
+          "schedule_kind": { "enum": ["cron", "natural"] },
+          "timezone": { "type": "string" },
+          "enabled": { "type": "boolean" },
+          "paused_until": { "type": ["string", "null"], "format": "date" },
+          "writes_prs": { "type": "boolean" },
+          "merges": { "type": "boolean" },
+          "purpose": { "type": "string" }
+        }
+      }
+    }
+  }
+}

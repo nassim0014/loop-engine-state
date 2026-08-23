@@ -1,0 +1,43 @@
+name: validate
+
+# The state repo is written by two unattended agents. A malformed config here
+# breaks every loop on both sides, so every push is validated before it can be
+# read as truth.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate config + run records
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install jsonschema
+        run: pip install --quiet jsonschema
+
+      - name: Validate config and run records
+        # Offline only: --online needs a token with access to every rotation
+        # repo, which is more than this workflow should hold.
+        run: python scripts/validate_config.py --runs
+
+      - name: Assert no literal zero-width characters in source
+        # Markers must be BUILT in code, never pasted. A pasted zero-width char
+        # is invisible in review and gets silently stripped by editors and
+        # formatters, so the marker scheme fails in a way nobody can see.
+        run: |
+          if grep -rlP '[\x{2060}\x{200b}]' --include='*.py' --include='*.json' \
+               --include='*.yml' --include='*.md' . ; then
+            echo "::error::literal zero-width character found in source (build it in code instead)"
+            exit 1
+          fi
+          echo "clean — no pasted zero-width characters"

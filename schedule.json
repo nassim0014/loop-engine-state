@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "timezone_default": "Africa/Tunis",
+  "loops": [
+    {
+      "name": "repo-closed-loop",
+      "agent": "claude-laptop",
+      "schedule": "17 10 * * *",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": true,
+      "merges": true,
+      "purpose": "Work the top backlog item on N repos by rotation; open PRs."
+    },
+    {
+      "name": "repo-review-loop",
+      "agent": "claude-laptop",
+      "schedule": "13 16 * * 2,5",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": true,
+      "merges": true,
+      "purpose": "Daily sweep + janitor: merge green PRs, triage conflicts, report red CI."
+    },
+    {
+      "name": "repo-open-loop",
+      "agent": "claude-laptop",
+      "schedule": "41 11 * * 6",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Weekly experiment; pushes a branch and opens an ISSUE, never a PR."
+    },
+    {
+      "name": "repo-genesis-loop",
+      "agent": "claude-laptop",
+      "schedule": "0 14 * * 3",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Every 28 days, create one new private repo coherent with the portfolio."
+    },
+    {
+      "name": "loop-engine-digest",
+      "agent": "claude-laptop",
+      "schedule": "37 18 * * 0",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Weekly read-only report across all loops and repos."
+    },
+    {
+      "name": "kinz-competitor-analyst",
+      "agent": "claude-laptop",
+      "schedule": "0 6 * * 1,3,5,0",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Read-only KINZ data-quality analysis; writes findings only."
+    },
+    {
+      "name": "cloud-kinz-improvement",
+      "agent": "zai-cloud",
+      "schedule": "0 2 */2 * *",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "☁️ Cloud: Kinz accounting improvement"
+    },
+    {
+      "name": "cloud-daily-commit",
+      "agent": "zai-cloud",
+      "schedule": "0 12 * * *",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "🟩 Cloud: Daily commit loop"
+    },
+    {
+      "name": "cloud-weekly-status",
+      "agent": "zai-cloud",
+      "schedule": "0 15 * * 5",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "📮 Cloud: weekly status update draft"
+    }
+  ]
+}

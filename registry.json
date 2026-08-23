@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "updated_at": "2026-08-23T08:30:25+00:00",
+  "repos": [
+    {
+      "name": "analytics-service-toolkit",
+      "owner": "nassim0014",
+      "visibility": "private",
+      "in_rotation": true,
+      "role": "rotation",
+      "created_by": "genesis-loop",
+      "notes": "New to the registry as of 2026-08-21 — no prior-cycle notes yet. Read CLAUDE.md/README.md/docs/IMPROVEMENTS.md fresh. | Import-only shared toolkit consumed by other KINZ services — treat its public module surface as a contract; breaking changes ripple to sibling repos."
+    },
+    {
+      "name": "btc-llm-sentiment",
+      "owner": "nassim0014",
+      "visibility": "public",
+      "in_rotation": true,
+      "role": "rotation",
+      "created_by": "manual",
+      "notes": "No CLAUDE.md, no .claude/commands/improve.md. docs/IMPROVEMENTS.md is the backlog. | Lightweight CI test env (matches .github/workflows/ci.yml): pip install numpy pandas scikit-learn pytest pytest-cov ruff bandit — do NOT pip install -r requirements.txt for routine work, it pulls tensorflow/torch/transformers (ml-smoke job only). | Test: pytest tests/ -q --cov=src --cov-report=term-missing. Lint: ruff check src/ scripts/ tests/. SAST: bandit -r src/ scripts/ -ll -ii -x tests/. | As of 2026-08-21: ruff check has one PRE-EXISTING failure on main (unused pytest import in tests/test_phase1_display.py, F401) — filed as backlog item 7, confirmed via git stash to predate any loop change. Check if still present before assuming a lint failure is yours. | Backlog bookkeeping has rotted before: items 1 and 2 were merged (PR #23, #24) but never ticked off in docs/IMPROVEMENTS.md, and item 3 as literally written was already covered by existing tests. Verify a backlog item is actually still open in the code before doing the work it describes — grep for the described symptom first. | src/cv/walk_forward.py:evaluate_oof_metrics had a real bug (crashed on empty y_true instead of using its own n_days==0 fallback) masked by a self-skipping test — fixed 2026-08-21 (PR #33). A second, different shape-mismatch crash in the same function (len(y_prob) < len(rets)) is filed as item 8, NOT yet fixed. | has_ci: true (ci.yml has a lightweight test job + an ml-smoke job; sentiment_alert.yml is a separate scheduled workflow)."
+    },
+    {
+      "name": "kinz-accounting-analysis-20260623-102129",
+      "owner": "nassim0014",
+      "visibility": "private",
+      "in_rotation": false,
+      "role": "cloud-owned",
+      "created_by": "manual",
+      "notes": "Owned by the cloud routine 'Kinz repo - improvement pass (every 2 days)' (trig_01FTYzTF5d7GsEuQZ3sxuebP), which has a deeper repo-specific prompt and runs regardless of whether this machine is on. Excluded here to avoid duplicate PRs. || Odoo 19 extraction is READ-ONLY. Never write back to Odoo. | Build a fresh venv; do NOT reuse any committed .venv/. See the 'Environnement Python' section of CLAUDE.md. | pip install -r requirements-dev.txt for tests/linting (it includes requirements.txt). CI runs Python 3.12. | Pipeline steps 1-3 touch the network; steps 4-5 run offline against committed data/raw/. Prefer working on 4-5. | Contains Tunisian tax-compliance logic and real business financials — treat regulatory rules as owner decisions, never 'fix' them unilaterally."
+    },
+    {
+      "name": "kinz-competitor-intelligence",
+      "owner": "nassim0014",
+      "visibility": "private",
+      "in_rotation": true,
+      "role": "rotation",
+      "created_by": "manual",
+      "notes": "Has .claude/commands/improve.md — follow it as the procedure for this repo. | Tests: ./venv/bin/pytest -q (~365 tests). Lint: ./venv/bin/ruff check . Use the venv, never system python. | CONTEXT.md has a 'Load-bearing decisions (do not regress)' section — read it before any code change. | NEVER touch data/competitors_seed.json — gitignored, holds 77 real people's contact details, local-only. | data/competitors.db is gitignored. Never commit it. Open it read-only (mode=ro) unless a step requires otherwise. | NEVER run the scrapers: scripts/manual_scrape.py duplicates the GitHub Actions job; scripts/scrape_parapharmacies.py takes 8-12 hours. | REGRESSION WATCH: if several competitors report exactly 100 products, WooCommerce Store API pagination has broken. Cost ~1000 products once. Guarded by tests/test_web_scraper.py::TestStoreApiPagination. Flag loudly. | Scraper-behaviour changes cannot be verified without a live run — always leave those PRs open. | trafilatura ERROR output is cosmetic noise from the description cleaner, not a failure. Ignore it. | The sibling dir kinz-competitor-intelligence-BACKUP-2026-07-21 is the owner's revert point. Never touch it. | A GitHub Actions workflow (scrape.yml) owns data collection and publishes to a rolling weekly-scrape-data Release, not to the local db."
+    },
+    {
+      "name": "kinz-margin-guardian-pipeline",
+      "owner": "nassim0014",
+      "visibility": "private",
+      "in_rotation": true,
+      "role": "rotation",
+      "created_by": "manual",
+      "notes": "Currently ingests SIMULATED competitor pricing; kinz-competitor-intelligence produces the real thing. That seam is a known opportunity, not a bug to silently patch. | Airflow + Postgres + FastAPI + Streamlit. Slack alerting on margin thresholds — never trigger real alerts from a test run."
+    },
+    {
+      "name": "kinz-price-bridge",
+      "owner": "nassim0014",
+      "visibility": "private",
+      "in_rotation": false,
+      "role": "bridge",
+      "created_by": "genesis-loop",
+      "notes": "Created by genesis 2026-08-19 then orphaned empty when that run hit the usage limit mid-scaffold. Held out of rotation until it has code — the closed loop cannot work a repo with no content. Genesis adopts and finishes it on its next run. || New to the registry as of 2026-08-19 — no prior-cycle notes yet. Read CLAUDE.md/README.md/docs/IMPROVEMENTS.md fresh."
+    },
+    {
+      "name": "kinz-secure-commerce-hub",
+      "owner": "nassim0014",
+      "visibility": "public",
+      "in_rotation": true,
+      "role": "rotation",
+      "created_by": "manual"
+    },
+    {
+      "name": "Next.js-SaaS",
+      "owner": "nassim0014",
+      "visibility": "public",
+      "in_rotation": true,
+      "role": "rotation",
+      "created_by": "manual",
+      "notes": "TypeScript strict. Next.js 16 + Supabase + Prisma 6, deploys to Cloudflare Pages. | It is a boilerplate others build on — treat public API and config shape as a contract; breaking changes need the owner."
+    }
+  ],
+  "rotation": {
+    "order": [
+      "analytics-service-toolkit",
+      "btc-llm-sentiment",
+      "kinz-competitor-intelligence",
+      "kinz-margin-guardian-pipeline",
+      "kinz-secure-commerce-hub",
+      "Next.js-SaaS"
+    ]
+  }
+}
