@@ -181,7 +181,9 @@ def online_checks(cfg: dict, rep: Report) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", default=".", help="dir containing the 4 config files")
-    ap.add_argument("--schemas", default=None, help="schemas dir (default: <dir>/schemas)")
+    ap.add_argument("--schemas", default=None,
+                    help="schemas dir (default: the schemas/ shipped next to this script, "
+                         "falling back to <dir>/schemas)")
     ap.add_argument("--runs", action="store_true", help="also validate runs/*.json")
     ap.add_argument("--online", action="store_true")
     ap.add_argument("--json", action="store_true")
@@ -189,7 +191,19 @@ def main() -> None:
     args = ap.parse_args()
 
     d = Path(args.dir).resolve()
-    sdir = Path(args.schemas).resolve() if args.schemas else d / "schemas"
+
+    # Schemas ship WITH this script, so resolve them from the script's location, not from
+    # wherever the config being validated happens to live. The old default was
+    # <dir>/schemas, which worked only when run from inside state-repo: the 2026-08-24
+    # backlog-refresh dry run pointed --dir at /home/kiwif/loop-engine (the config cache)
+    # and got 4 "missing schema" errors. Since the runbook says abort the session when
+    # validate_config fails, that mismatch would have blocked every run of that loop.
+    # <dir>/schemas is kept as a fallback so a self-contained config dir still validates.
+    if args.schemas:
+        sdir = Path(args.schemas).resolve()
+    else:
+        shipped = Path(__file__).resolve().parent.parent / "schemas"
+        sdir = shipped if shipped.is_dir() else d / "schemas"
 
     if args.marker is not None:
         m = MARKER_RE.search(args.marker)

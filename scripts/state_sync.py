@@ -114,8 +114,37 @@ def three_way(base: dict, local: dict, remote: dict) -> dict:
     return out
 
 
+def guard_work_dir(work: Path) -> None:
+    """Refuse to sync into a directory whose loop-settings.json is the OTHER one.
+
+    Two unrelated files are called loop-settings.json: the loop config in this repo
+    (merge_policy, rotation_policy, genesis) and Claude Code's permission allowlist at
+    /home/kiwif/loop-engine/loop-settings.json (permissions.allow/deny). state_sync
+    syncs the first by name.
+
+    `--work /home/kiwif/loop-engine` would therefore overwrite the allowlist with loop
+    config on pull, and on push would send the allowlist to the shared state repo — where
+    the other agent would read it as config. Nothing but the default --work value
+    currently prevents that, which is too thin a margin for a file that governs what the
+    loops are permitted to do.
+    """
+    f = work / "loop-settings.json"
+    if not f.exists():
+        return
+    try:
+        d = json.loads(f.read_text())
+    except (json.JSONDecodeError, OSError):
+        return
+    if "permissions" in d and "merge_policy" not in d:
+        raise SystemExit(
+            f"ABORT: {f} is a Claude Code permission allowlist, not loop config.\n"
+            f"       Syncing here would overwrite it (pull) or publish it (push).\n"
+            f"       Use --work /home/kiwif/loop-engine/state-cache.")
+
+
 def cmd_pull(a) -> None:
     work = Path(a.work); work.mkdir(parents=True, exist_ok=True)
+    guard_work_dir(work)
     basedir = work / ".base"; basedir.mkdir(exist_ok=True)
     for f in FILES:
         data, _ = read_remote(f)
@@ -129,6 +158,7 @@ def cmd_pull(a) -> None:
 
 def cmd_push(a) -> None:
     work = Path(a.work)
+    guard_work_dir(work)
     basedir = work / ".base"
     for f in FILES:
         local_p = work / f
