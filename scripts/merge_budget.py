@@ -9,8 +9,20 @@ counter in state.json cannot see the other agent's merges, so it is structurally
 incapable of being correct — the number is always recomputed from GitHub here and
 state.json's copy is a reporting cache only.
 
-Counts agent-marker PRs merged since Monday 00:00 Africa/Tunis.
+Counts agent PRs merged since Monday 00:00 Africa/Tunis.
 Dependabot merges and stale-closes are exempt.
+
+WHAT COUNTS, and why it is not the marker alone. Until 2026-08-24 this matched the
+literal substring "loop-agent:" in the PR body. On that day a closed-loop cycle merged
+kinz-secure-commerce-hub#46 with the body line "Loop-Agent: closed-loop / claude / laptop"
+— different case, different layout, no zero-width prefix. The substring did not match, so
+the merge was invisible and the budget reported 0/20 while at least one merge had landed.
+
+A marker is a convention the writing agent has to remember to apply; a budget is a control.
+Resting a control on a convention lets the controlled party opt out of it by reformatting a
+string. The branch prefix is structural instead — a loop PR cannot exist without the branch
+it was pushed to — so `loop/` and `exp/` heads are the primary signal, with a
+case-insensitive marker match kept as a fallback for anything pushed from another layout.
 """
 from __future__ import annotations
 
@@ -23,7 +35,24 @@ from datetime import datetime, timedelta, timezone
 
 REPO = "nassim0014/loop-engine-state"
 TZ = timezone(timedelta(hours=1))          # Africa/Tunis, fixed +01:00, no DST
-MARKER = "loop-agent:"                      # visible substring of the marker
+MARKER = "loop-agent:"                      # visible substring, matched case-insensitively
+AGENT_HEADS = ("loop/", "exp/")             # structural signal; see module docstring
+BOT_AUTHORS = {"dependabot", "app/dependabot", "github-actions", "app/github-actions"}
+
+
+def is_agent_merge(pr: dict) -> bool:
+    """A merged PR counts against the shared budget if an agent authored the branch.
+
+    Branch prefix first: it cannot be omitted the way a body marker can. The marker
+    check is a case-insensitive fallback so a PR pushed from some other layout still
+    counts rather than silently slipping the cap.
+    """
+    if (pr.get("author") or {}).get("login", "").lower() in BOT_AUTHORS:
+        return False
+    head = pr.get("headRefName") or ""
+    if head.startswith(AGENT_HEADS):
+        return True
+    return MARKER in (pr.get("body") or "").lower()
 
 
 def gh_json(*args: str):
@@ -60,13 +89,13 @@ def main() -> None:
     for name in reg["rotation"]["order"]:
         try:
             prs = gh_json("pr", "list", "-R", f"nassim0014/{name}", "--state", "merged",
-                          "--limit", "100", "--json", "number,body,mergedAt") or []
+                          "--limit", "100", "--json",
+                          "number,body,mergedAt,headRefName,author") or []
         except RuntimeError as e:
             print(f"WARN could not read {name}: {e}", file=sys.stderr)
             continue
         n = sum(1 for p in prs
-                if p.get("mergedAt", "") >= since_utc
-                and MARKER in (p.get("body") or ""))
+                if p.get("mergedAt", "") >= since_utc and is_agent_merge(p))
         per_repo[name] = n
         used += n
 
