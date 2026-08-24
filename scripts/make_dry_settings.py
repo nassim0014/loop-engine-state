@@ -12,6 +12,22 @@ preamble, misreads it, or is steered by something it reads in a PR body.
 Deny beats allow in Claude Code, so this is derived, never hand-maintained: it copies the
 live settings and layers an unconditional deny list on top. Editing loop-settings.json
 can widen the real run; it cannot widen the dry run.
+
+STRENGTH OF THE GUARANTEE — read this before trusting it further than it goes.
+
+  Tool-level denies (Write, Edit, NotebookEdit) are HARD. They name the tool; there is no
+  alternate spelling.
+
+  Bash(...) denies are PREFIX MATCHES and are only as good as the spellings enumerated
+  here. `Bash(git push:*)` catches `git push origin main` and does NOT catch
+  `git -C /repo push origin main`, which starts with `git -C`. The 2026-08-24 review-loop
+  dry run found exactly this on its own: blocked on `cd x && git ...`, it retried as
+  `git -C x ...` and proceeded. It was doing reads, so nothing came of it — but the same
+  detour carries a write just as well.
+
+  So: treat the Bash layer as defense-in-depth, not a sandbox. The reason a dry run is
+  safe is the prompt preamble AND the tool-level denies AND these patterns together. Any
+  new mutating command shape belongs in DENY the moment it is noticed.
 """
 from __future__ import annotations
 
@@ -31,6 +47,12 @@ DENY = [
     "Edit",
     "NotebookEdit",
     # --- git writes ---
+    # `git -C <path> push` does not start with "git push", so the rules below miss it.
+    # Denying the whole -C form over-blocks reads; for a dry run that is the right
+    # direction to err, and gh api / the Read tool cover the read cases.
+    "Bash(git -C:*)",
+    "Bash(git --git-dir:*)",
+    "Bash(git --work-tree:*)",
     "Bash(git push:*)",
     "Bash(git commit:*)",
     "Bash(git merge:*)",
