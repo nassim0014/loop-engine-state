@@ -53,6 +53,20 @@ DENY = [
     "Bash(git -C:*)",
     "Bash(git --git-dir:*)",
     "Bash(git --work-tree:*)",
+    # git pull mutates the working tree and can create a merge commit. It was missing
+    # until 2026-08-24: the closed-loop dry run found `cd x && git pull` denied but a
+    # bare `git pull -q` allowed, and pulled.
+    "Bash(git pull:*)",
+    "Bash(git fetch:*)",
+    "Bash(git clone:*)",
+    "Bash(git remote:*)",
+    "Bash(git submodule:*)",
+    "Bash(git stash:*)",
+    "Bash(git apply:*)",
+    "Bash(git restore:*)",
+    "Bash(git rm:*)",
+    "Bash(git mv:*)",
+    "Bash(git add:*)",
     "Bash(git push:*)",
     "Bash(git commit:*)",
     "Bash(git merge:*)",
