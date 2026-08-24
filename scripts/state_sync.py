@@ -10,6 +10,17 @@ Writes are SHA-conditional (read -> mutate -> update with base SHA). On 409 the
 change is re-applied on top of the newer blob, up to 3 times, then it aborts.
 Two agents write here and never coordinate in real time, so a blind write would
 silently drop whichever one lost the race.
+
+`push` merges three ways: base (what the remote said at pull time) vs local vs the
+CURRENT remote. Only fields the local side actually changed are applied; everything
+it merely held a stale copy of is left at whatever the remote now says.
+
+This is not decoration. Until 2026-08-24 push did `d.clear(); d.update(local)` inside
+the retry loop — it re-read the fresh blob and immediately threw it away. Detection
+worked and resolution ignored it, so the retry loop turned a safe 409 into a guaranteed
+overwrite. It ate a config commit that had landed 16 seconds earlier. Optimistic
+concurrency needs BOTH halves; the base snapshot is what makes the second half possible,
+because without it you cannot tell "I changed this field" from "my copy is old".
 """
 from __future__ import annotations
 
@@ -71,27 +82,86 @@ def mutate(path: str, fn, message: str) -> dict:
         f"contending for the same field — a human should look before retrying.")
 
 
+def three_way(base: dict, local: dict, remote: dict) -> dict:
+    """Apply local's changes (measured against base) on top of remote.
+
+    A field the local side never touched keeps the REMOTE value, however stale the
+    local copy is. That single rule is what stops one loop's in-memory snapshot from
+    reverting another agent's concurrent edit.
+
+    Lists are atomic — schedule.json's `tasks` array is replaced only if the local
+    side genuinely changed it. Element-wise list merging would need stable identity
+    per element and is not worth the ambiguity here.
+    """
+    out = dict(remote)
+    for k in set(base) | set(local):
+        if k not in local:
+            # Local deleted it. Honour that only if the remote still agrees with base;
+            # if the remote changed it too, someone made it relevant again — keep theirs.
+            if k in base and remote.get(k) == base[k]:
+                out.pop(k, None)
+            continue
+        if k not in base:
+            out[k] = local[k]                      # local added it
+            continue
+        if local[k] == base[k]:
+            continue                                # untouched locally -> remote wins
+        if isinstance(local[k], dict) and isinstance(base[k], dict) \
+                and isinstance(out.get(k), dict):
+            out[k] = three_way(base[k], local[k], out[k])
+        else:
+            out[k] = local[k]
+    return out
+
+
 def cmd_pull(a) -> None:
     work = Path(a.work); work.mkdir(parents=True, exist_ok=True)
+    basedir = work / ".base"; basedir.mkdir(exist_ok=True)
     for f in FILES:
         data, _ = read_remote(f)
-        (work / f).write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+        blob = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+        (work / f).write_text(blob)
+        # The base snapshot is the record of what we were told. push diffs against it
+        # to separate "I edited this" from "I am holding an old copy".
+        (basedir / f).write_text(blob)
         print(f"  pulled {f}")
 
 
 def cmd_push(a) -> None:
     work = Path(a.work)
+    basedir = work / ".base"
     for f in FILES:
-        local = work / f
-        if not local.exists():
+        local_p = work / f
+        if not local_p.exists():
             continue
-        new = json.loads(local.read_text())
+        new = json.loads(local_p.read_text())
         remote, _ = read_remote(f)
         if new == remote:
             print(f"  {f} unchanged")
             continue
-        mutate(f, lambda d, n=new: d.clear() or d.update(n), a.message)
-        print(f"  pushed {f}")
+
+        base_p = basedir / f
+        if not base_p.exists():
+            # No base means no way to tell an edit from a stale field. Refuse rather
+            # than fall back to a wholesale write — that fallback is the original bug.
+            raise SystemExit(
+                f"ABORT: no base snapshot for {f} at {base_p}.\n"
+                f"       push cannot tell which fields you actually changed, and "
+                f"writing the whole file would clobber concurrent edits.\n"
+                f"       Run `state_sync.py pull` first.")
+        base = json.loads(base_p.read_text())
+
+        touched = sorted(k for k in set(base) | set(new)
+                         if base.get(k) != new.get(k))
+
+        def apply(d, b=base, n=new):
+            # Merge BEFORE clearing: d is the fresh remote blob and is the third input.
+            merged = three_way(b, n, dict(d))
+            d.clear()
+            d.update(merged)
+
+        mutate(f, apply, a.message)
+        print(f"  pushed {f} (fields changed: {', '.join(touched) or 'none'})")
 
 
 def cmd_lease(a) -> None:
