@@ -34,9 +34,9 @@
       "timezone": "Africa/Tunis",
       "enabled": true,
       "paused_until": null,
-      "writes_prs": false,
+      "writes_prs": true,
       "merges": false,
-      "purpose": "Weekly experiment; pushes a branch and opens an ISSUE, never a PR."
+      "purpose": "Weekly experiment; parks a PR for review. Never merges."
     },
     {
       "name": "repo-genesis-loop",
