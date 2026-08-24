@@ -75,6 +75,18 @@
       "purpose": "Read-only KINZ data-quality analysis; writes findings only."
     },
     {
+      "name": "repo-backlog-refresh",
+      "agent": "claude-laptop",
+      "schedule": "0 9 * * 6",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": true,
+      "merges": false,
+      "purpose": "Weekly backlog top-up: one docs-only PR per repo."
+    },
+    {
       "name": "cloud-kinz-improvement",
       "agent": "zai-cloud",
       "schedule": "0 2 */2 * *",
