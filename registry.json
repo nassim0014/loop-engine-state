@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-24T09:21:52+00:00",
+  "updated_at": "2026-08-27T09:22:49+00:00",
   "repos": [
     {
       "name": "analytics-service-toolkit",
@@ -22,7 +22,7 @@
       "role": "rotation",
       "created_by": "manual",
       "notes": "No CLAUDE.md, no .claude/commands/improve.md. docs/IMPROVEMENTS.md is the backlog. | Lightweight CI test env (matches .github/workflows/ci.yml): pip install numpy pandas scikit-learn pytest pytest-cov ruff bandit — do NOT pip install -r requirements.txt for routine work, it pulls tensorflow/torch/transformers (ml-smoke job only). | Test: pytest tests/ -q --cov=src --cov-report=term-missing. Lint: ruff check src/ scripts/ tests/. SAST: bandit -r src/ scripts/ -ll -ii -x tests/. | As of 2026-08-21: ruff check has one PRE-EXISTING failure on main (unused pytest import in tests/test_phase1_display.py, F401) — filed as backlog item 7, confirmed via git stash to predate any loop change. Check if still present before assuming a lint failure is yours. | Backlog bookkeeping has rotted before: items 1 and 2 were merged (PR #23, #24) but never ticked off in docs/IMPROVEMENTS.md, and item 3 as literally written was already covered by existing tests. Verify a backlog item is actually still open in the code before doing the work it describes — grep for the described symptom first. | src/cv/walk_forward.py:evaluate_oof_metrics had a real bug (crashed on empty y_true instead of using its own n_days==0 fallback) masked by a self-skipping test — fixed 2026-08-21 (PR #33). A second, different shape-mismatch crash in the same function (len(y_prob) < len(rets)) is filed as item 8, NOT yet fixed. | has_ci: true (ci.yml has a lightweight test job + an ml-smoke job; sentiment_alert.yml is a separate scheduled workflow).",
-      "pushed_at": "2026-08-24T05:16:47Z",
+      "pushed_at": "2026-08-25T15:24:02Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -34,7 +34,7 @@
       "role": "cloud-owned",
       "created_by": "manual",
       "notes": "Owned by the cloud routine 'Kinz repo - improvement pass (every 2 days)' (trig_01FTYzTF5d7GsEuQZ3sxuebP), which has a deeper repo-specific prompt and runs regardless of whether this machine is on. Excluded here to avoid duplicate PRs. || Odoo 19 extraction is READ-ONLY. Never write back to Odoo. | Build a fresh venv; do NOT reuse any committed .venv/. See the 'Environnement Python' section of CLAUDE.md. | pip install -r requirements-dev.txt for tests/linting (it includes requirements.txt). CI runs Python 3.12. | Pipeline steps 1-3 touch the network; steps 4-5 run offline against committed data/raw/. Prefer working on 4-5. | Contains Tunisian tax-compliance logic and real business financials — treat regulatory rules as owner decisions, never 'fix' them unilaterally.",
-      "pushed_at": "2026-08-23T02:11:40Z",
+      "pushed_at": "2026-08-27T02:08:19Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -58,7 +58,7 @@
       "role": "rotation",
       "created_by": "manual",
       "notes": "Currently ingests SIMULATED competitor pricing; kinz-competitor-intelligence produces the real thing. That seam is a known opportunity, not a bug to silently patch. | Airflow + Postgres + FastAPI + Streamlit. Slack alerting on margin thresholds — never trigger real alerts from a test run.",
-      "pushed_at": "2026-08-22T10:09:14Z",
+      "pushed_at": "2026-08-24T09:33:50Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -81,7 +81,7 @@
       "in_rotation": true,
       "role": "rotation",
       "created_by": "manual",
-      "pushed_at": "2026-08-24T05:17:11Z",
+      "pushed_at": "2026-08-25T15:30:21Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -95,6 +95,18 @@
       "notes": "TypeScript strict. Next.js 16 + Supabase + Prisma 6, deploys to Cloudflare Pages. | It is a boilerplate others build on — treat public API and config shape as a contract; breaking changes need the owner.",
       "pushed_at": "2026-08-24T05:22:00Z",
       "primary_language": "TypeScript",
+      "is_archived": false
+    },
+    {
+      "name": "loop-engine-state",
+      "owner": "nassim0014",
+      "visibility": "private",
+      "in_rotation": false,
+      "role": "infra",
+      "created_by": "manual",
+      "notes": "The Loop Engine state repo itself — config, schemas, run records, reports. Consumed by Claude (laptop) and Z.ai (sandbox). Never a rotation target; the loops must not open PRs against their own control plane.",
+      "pushed_at": "2026-08-26T13:02:57Z",
+      "primary_language": "Python",
       "is_archived": false
     }
   ],
