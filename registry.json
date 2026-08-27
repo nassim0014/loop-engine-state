@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-27T09:38:42+00:00",
+  "updated_at": "2026-08-27T09:40:00+00:00",
   "repos": [
     {
       "name": "analytics-service-toolkit",
@@ -95,18 +95,6 @@
       "notes": "TypeScript strict. Next.js 16 + Supabase + Prisma 6, deploys to Cloudflare Pages. | It is a boilerplate others build on — treat public API and config shape as a contract; breaking changes need the owner.",
       "pushed_at": "2026-08-24T05:22:00Z",
       "primary_language": "TypeScript",
-      "is_archived": false
-    },
-    {
-      "name": "loop-engine-state",
-      "owner": "nassim0014",
-      "visibility": "private",
-      "in_rotation": false,
-      "role": "infra",
-      "created_by": "manual",
-      "notes": "The Loop Engine state repo itself — config, schemas, run records, reports. Consumed by Claude (laptop) and Z.ai (sandbox). Never a rotation target; the loops must not open PRs against their own control plane.",
-      "pushed_at": "2026-08-26T13:02:57Z",
-      "primary_language": "Python",
       "is_archived": false
     }
   ],
