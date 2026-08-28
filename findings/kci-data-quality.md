@@ -3,6 +3,110 @@
 Updated by the `kinz-competitor-analyst` scheduled task. Same headings every
 run so diffs are meaningful; counts first, then the specific rows that changed.
 
+## Run: 2026-08-28
+
+### State
+- Competitors: 78 total, 54 active, 26 active+website  *(unchanged since 08-24)*
+- Products: 1,905 (1,783 priced)  *(unchanged)*
+- Price history rows: 1,789  *(unchanged)*
+- Outlets: 3,923 — `is_stockist` 0, `contacted` 0, `notes` empty on all 3,923.
+  *(unchanged — 4th run running; still needs a one-line owner confirmation that
+  the sales-pipeline fields are simply not entered yet, not lost.)*
+- Local DB last scrape: **2026-07-30 17:07 UTC — 29 days old, stale.** No local
+  scrape since. Approaching the point where the dashboard's July snapshot is
+  misleading for any week-over-week read.
+
+### Data quality (qa_validate.py, read-only)
+- missing_price: 122 (6.4%) · missing_category: 161 (8.5%) ·
+  missing_description: 93 (4.9%) · short_description: 25  *(all identical to
+  08-24 and 08-26 — same frozen July data.)*
+- ECOVILLAGE missing_price concentration unchanged (67/85 = 79% of its own
+  catalog; batch-2 site so cloud release never carries it).
+- **NEW — wrong-price cluster on FLORAISON natural beauty (batch-1 site, so
+  this one IS in the cloud release too).** 13 of ~70 FLORAISON products are
+  pinned to exactly **350.0 TND** — far outside its real range (12–180 TND).
+  `qa_validate.py` does not flag it because 350 is a "plausible" number and the
+  check only looks for nulls, not identical-value clusters.
+  - Confirmed artefact, not real prices: in the same 2026-07-30 scrape, the
+    detail-page enrichment pass corrected 6 of these from 350 → real
+    (Routine Éclat 350→137, Routine Anti-âge 350→145, Crème Exfoliante
+    Comfort 350→48, Sérum Hair Pro 350→34, Lavender & Sage 350→24, Sérum
+    Déo Roll-On Aquarelle 350→29). The other 13 never got corrected.
+  - One of the 13, *"Parlons de Sunguard SPF50+"*, is a **blog article
+    ingested as a product**.
+  - **Root cause (two interacting caps in `src/scrapers/web_scraper.py`):**
+    (a) detail-page enrichment — the reliable price source — is hard-capped
+    at the first 15 products (`products_to_enrich = list(result.products[:15])`,
+    line 1217; also `[:15]` at line 1066). FLORAISON has ~70, so ~55 keep
+    whatever the listing card matched. (b) The Stage-8 "all identical price →
+    banner match, clear them" guard only fires when **every** priced product
+    shares one value (`len(unique_prices) == 1`, line 1313); FLORAISON has
+    plenty of real prices, so the partial 350 cluster slips straight through.
+    350 is almost certainly a "livraison gratuite à partir de 350 DT"
+    free-shipping threshold on the listing page.
+  - **Proposed fix (reported only, no PR per task scope):** raise or remove
+    the 15-item enrichment cap (or prioritise enriching products whose price
+    equals the modal value), and widen the Stage-8 guard to clear a *cluster*
+    of ≥N identical prices that are statistical outliers vs the rest of the
+    catalogue, not only the all-identical case. Add a fixture test with a
+    mixed real/banner price list. Separately, exclude `/blog/` and article
+    URLs from product discovery so "Parlons de…" stops being a product.
+
+### Website health (check_websites.py, read-only)
+- 25/26 alive (HTTP 200). Same single recoverable timeout: **HERBES DE
+  TUNISIE** (no response in 20s — 3rd run in a row). Still likely transient;
+  websearch still turns up no clear replacement URL. Not worth acting on.
+- NAKAWA still reported "alive HTTP 200" by the health check (parked-domain,
+  confirmed 08-26 by page title *"Nom de domaine à vendre"* — not re-fetched
+  this run). Still active in the DB; still needs a manual retire. `--mark-inactive`
+  will not catch it.
+
+### Scrape-failure triage
+- Local `scraping_logs` unchanged — all rows dated 2026-07-30. Same 7
+  active+website/0-product competitors as 08-26; classifications from that run
+  stand (NAKAWA parked, BIO GATRANA React SPA, NOPAL TUNISIE B2B-no-cart,
+  AGROLINE/MED EXOIL/NOPALISSE/HERBES DE TUNISIE transient connectivity —
+  AGROLINE scraped 29 products fine in the 08-24 cloud run).
+- No WooCommerce pagination regression (no competitor at exactly 100 products).
+
+### Price movements
+- Still nothing. Most recent price_history row is 2026-07-30; no movement
+  window exists. The only "changes" the query surfaces are the within-run
+  350→real enrichment corrections described above, not market moves.
+
+### GitHub Actions cloud scrape (`scrape.yml`)
+- Last 5 runs **unchanged since 08-24** (no new run has fired; next schedule
+  ~2026-08-31): 08-24 ✅ · 08-21 dispatch ✅ · 08-21 cancelled · 08-17 ❌ ·
+  08-10 ❌. Seed secret still set. 08-10/08-17 = resolved secret-unset pattern.
+- **STILL CRITICAL — batch 2 persists nothing.** Full evidence in the 08-26
+  section below; nothing has changed. Every weekly release still carries only
+  batch-1 competitors (~10 of 77, ~1,300 products), silently dropping KARINA,
+  ORGANICA, PERFECT BIO, ECOVILLAGE, STÉ KINZ, MELIORA, PUNICA, TVH, RIVILIA,
+  NURESSENCE (~600 products, ~40% of catalogue). Fix is the
+  `manual_scrape.py --offset` change described 08-26. Highest priority.
+- **Still open — seed-resurrection bug** (`seed_from_json.py` hardcodes
+  `is_active=True`): unchanged.
+
+### Needing owner decision
+1. **CRITICAL — cloud scrape batch 2 saves nothing** (unchanged from 08-26).
+   `manual_scrape.py --offset` fix. Highest priority.
+2. **NEW — FLORAISON 350 TND wrong-price cluster** (13 products, incl. a blog
+   post as a product). Batch-1 site so it also pollutes the cloud release.
+   Scraper fix proposed above; no data mutation done.
+3. NAKAWA — parked domain, health check won't catch it; needs a manual
+   `edit_competitor.py` deactivate (unchanged from 08-26).
+4. ECOVILLAGE price-parsing bug — 79% of its catalogue unpriced locally;
+   batch-2 so invisible in cloud until #1 is fixed (unchanged).
+5. BIO GATRANA / NOPAL TUNISIE — unsupported site types, not scraper bugs;
+   decide keep-tracking vs mark "no catalogue" (unchanged).
+6. Seed-resurrection bug in `seed_from_json.py` — still unfixed (unchanged).
+7. Local DB now 29 days stale — a local scrape is still the only way to get
+   batch-2 competitors' data at all until #1 lands (unchanged).
+8. Outlets pipeline fields all empty across 3,923 rows — confirm expected,
+   not lost (unchanged; 4th run flagging this).
+
+---
+
 ## Run: 2026-08-26
 
 ### State
