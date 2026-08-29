@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updated_at": "2026-08-29T08:16:22+00:00",
-  "rotation_cursor": 1,
+  "updated_at": "2026-08-29T09:47:15+00:00",
+  "rotation_cursor": 3,
   "loops": {
     "repo-closed-loop": {
-      "last_run": "2026-08-27T10:55:00+00:00",
+      "last_run": "2026-08-29T10:55:00+00:00",
       "status": "idle",
       "consecutive_failures": 0
     },
@@ -58,6 +58,6 @@
   "merge_budget": {
     "week_iso": "2026-W35",
     "merges_this_week": 1,
-    "opened_this_week": 5
+    "opened_this_week": 7
   }
 }
