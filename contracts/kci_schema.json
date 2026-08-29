@@ -1,0 +1,115 @@
+{
+  "_comment": "Exported from kinz-competitor-intelligence SQLAlchemy metadata. kinz-price-bridge parses against this shape; a diff here means kpb may silently mis-parse.",
+  "source": "kinz-competitor-intelligence/src/database.py",
+  "tables": {
+    "competitors": {
+      "business_type": "VARCHAR(100)",
+      "certifications": "TEXT",
+      "company_name": "VARCHAR(255)",
+      "contact_person": "VARCHAR(255)",
+      "created_at": "DATETIME",
+      "email": "VARCHAR(255)",
+      "facebook_page": "VARCHAR(255)",
+      "governorate": "VARCHAR(255)",
+      "id": "INTEGER",
+      "instagram_handle": "VARCHAR(100)",
+      "is_active": "BOOLEAN",
+      "last_scraped_at": "DATETIME",
+      "linkedin_url": "VARCHAR(500)",
+      "location": "VARCHAR(255)",
+      "phone": "VARCHAR(100)",
+      "products_offered": "TEXT",
+      "tiktok_handle": "VARCHAR(100)",
+      "website": "VARCHAR(500)",
+      "year_established": "VARCHAR(20)",
+      "youtube_channel": "VARCHAR(200)"
+    },
+    "facebook_metrics": {
+      "competitor_id": "INTEGER",
+      "followers_count": "INTEGER",
+      "id": "INTEGER",
+      "page_likes": "INTEGER",
+      "posts_count": "INTEGER",
+      "recorded_at": "DATETIME"
+    },
+    "instagram_metrics": {
+      "competitor_id": "INTEGER",
+      "engagement_rate": "FLOAT",
+      "followers_count": "INTEGER",
+      "following_count": "INTEGER",
+      "id": "INTEGER",
+      "last_post_date": "DATE",
+      "posts_count": "INTEGER",
+      "recorded_at": "DATETIME"
+    },
+    "linkedin_metrics": {
+      "competitor_id": "INTEGER",
+      "employee_count": "INTEGER",
+      "followers_count": "INTEGER",
+      "id": "INTEGER",
+      "recorded_at": "DATETIME"
+    },
+    "parapharmacies": {
+      "address": "TEXT",
+      "business_category": "VARCHAR(20)",
+      "contacted": "BOOLEAN",
+      "email": "VARCHAR(255)",
+      "facebook_page": "VARCHAR(500)",
+      "google_maps_url": "VARCHAR(1000)",
+      "governorate": "VARCHAR(100)",
+      "id": "INTEGER",
+      "instagram_handle": "VARCHAR(100)",
+      "is_stockist": "BOOLEAN",
+      "latitude": "FLOAT",
+      "longitude": "FLOAT",
+      "name": "VARCHAR(255)",
+      "notes": "TEXT",
+      "opening_hours": "TEXT",
+      "outlet_type": "VARCHAR(50)",
+      "phone": "VARCHAR(100)",
+      "rating": "FLOAT",
+      "reviews_count": "INTEGER",
+      "scraped_at": "DATETIME",
+      "source": "VARCHAR(100)",
+      "website": "VARCHAR(500)"
+    },
+    "price_history": {
+      "id": "INTEGER",
+      "price_tnd": "FLOAT",
+      "product_id": "INTEGER",
+      "recorded_at": "DATETIME",
+      "source": "VARCHAR(50)"
+    },
+    "products": {
+      "category": "VARCHAR(100)",
+      "competitor_id": "INTEGER",
+      "currency": "VARCHAR(3)",
+      "description": "TEXT",
+      "first_seen_at": "DATETIME",
+      "id": "INTEGER",
+      "image_url": "VARCHAR(500)",
+      "is_available": "BOOLEAN",
+      "price_tnd": "FLOAT",
+      "product_name": "VARCHAR(255)",
+      "product_url": "VARCHAR(500)",
+      "scraped_at": "DATETIME",
+      "volume": "VARCHAR(50)"
+    },
+    "scraping_logs": {
+      "competitor_id": "INTEGER",
+      "error_message": "TEXT",
+      "id": "INTEGER",
+      "scrape_type": "VARCHAR(50)",
+      "scraped_at": "DATETIME",
+      "status": "VARCHAR(20)"
+    },
+    "youtube_metrics": {
+      "competitor_id": "INTEGER",
+      "id": "INTEGER",
+      "recorded_at": "DATETIME",
+      "subscriber_count": "INTEGER",
+      "total_view_count": "INTEGER",
+      "video_count": "INTEGER"
+    }
+  }
+}
