@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-27T09:40:02+00:00",
+  "updated_at": "2026-08-29T08:16:22+00:00",
   "rotation_cursor": 1,
   "loops": {
     "repo-closed-loop": {
@@ -30,7 +30,7 @@
       "consecutive_failures": 0
     },
     "repo-backlog-refresh": {
-      "last_run": null,
+      "last_run": "2026-08-29T08:16:22+00:00",
       "status": "idle",
       "consecutive_failures": 0
     },

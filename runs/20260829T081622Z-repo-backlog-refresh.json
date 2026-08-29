@@ -1,0 +1,19 @@
+{
+ "loop": "repo-backlog-refresh",
+ "agent": "claude-laptop",
+ "started": "2026-08-29T07:50:00Z",
+ "ended": "2026-08-29T08:16:22Z",
+ "status": "success",
+ "prs_opened": 2,
+ "prs_merged": 0,
+ "prs_closed": 0,
+ "tests_added": 0,
+ "repos_touched": [
+  "btc-llm-sentiment",
+  "Next.js-SaaS"
+ ],
+ "errors": [
+  "Codecov API unreachable for all repos (owner nassim0014 not on Codecov / no token) \u2014 coverage gathered by running pytest --cov locally instead",
+  "schema drift: first-ever export of contracts/kci_schema.json committed as baseline; kpb has no committed schema fixture to diff against yet (kpb out of rotation)"
+ ]
+}
