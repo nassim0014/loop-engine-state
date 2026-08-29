@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-29T09:47:13+00:00",
+  "updated_at": "2026-08-29T09:47:36+00:00",
   "repos": [
     {
       "name": "analytics-service-toolkit",
@@ -102,9 +102,9 @@
       "owner": "nassim0014",
       "visibility": "private",
       "in_rotation": false,
-      "role": "infra",
+      "role": "read-only",
       "created_by": "manual",
-      "notes": "Loop Engine state repo — config, schemas, run records, findings, reports. Consumed by Claude (laptop) and Z.ai (sandbox). NOT a rotation target; excluded so loops never open improvement PRs against their own control plane.",
+      "notes": "Loop Engine state repo — config, schemas, run records, findings, reports. Consumed by Claude (laptop) and Z.ai (sandbox). NOT a rotation target: it is the loops' own control plane, never open improvement PRs against it. role=read-only is the closest schema enum; treat as infra.",
       "pushed_at": "2026-08-29T08:17:01Z",
       "primary_language": "Python",
       "is_archived": false
