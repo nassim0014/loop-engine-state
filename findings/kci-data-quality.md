@@ -3,6 +3,99 @@
 Updated by the `kinz-competitor-analyst` scheduled task. Same headings every
 run so diffs are meaningful; counts first, then the specific rows that changed.
 
+## Run: 2026-09-01
+
+### State
+- Competitors: 78 total, 54 active, 26 active+website  *(unchanged since 08-24)*
+- Products: 1,905 (1,783 priced)  *(unchanged — frozen July local data)*
+- Price history rows: 1,789  *(unchanged)*
+- Outlets: 3,923 — `is_stockist` 0, `contacted` 0, `notes` empty on all 3,923.
+  *(unchanged, 5th run flagging. Still needs a one-line owner confirmation that
+  the sales-pipeline fields are simply not entered yet, not lost.)*
+- Local DB last scrape: **2026-07-30 17:07 UTC — 33 days old, stale.** Crossed
+  the one-month mark. Any week-over-week or month-over-month read on the
+  dashboard is now against a stale July baseline.
+
+### Data quality (qa_validate.py, read-only)
+- missing_price: 122 (6.4%) · missing_category: 161 (8.5%) ·
+  missing_description: 93 (4.9%) · short_description: 25  *(all identical to
+  08-24/08-26/08-28 — same frozen July data, no change possible without a
+  local scrape.)*
+- ECOVILLAGE missing_price concentration unchanged (67/85 = 79% of its own
+  catalog; batch-2 site so the cloud release never carries it).
+- FLORAISON 350 TND wrong-price cluster (13 products + 1 blog post as a
+  product) unchanged — full analysis and proposed scraper fix in the 08-28
+  section. Batch-1 site, so it also pollutes the cloud release.
+
+### Website health (check_websites.py, read-only)
+- 25/26 alive (HTTP 200). Same single recoverable timeout: **HERBES DE
+  TUNISIE** (no response in 20s — 4th consecutive run). Websearch still finds
+  no clear replacement URL. Still treat as transient; not worth acting on.
+- NAKAWA still reported "alive HTTP 200" by the health check (parked domain,
+  confirmed 08-26 by page title *"Nom de domaine à vendre"*; not re-fetched
+  this run). Still active in the DB; still needs a manual retire —
+  `--mark-inactive` will not catch it.
+
+### Scrape-failure triage
+- Local `scraping_logs` unchanged — all rows dated 2026-07-30. Same 7
+  active+website/0-product competitors as prior runs; classifications stand
+  (NAKAWA parked, BIO GATRANA React SPA, NOPAL TUNISIE B2B-no-cart,
+  AGROLINE/MED EXOIL/NOPALISSE/HERBES DE TUNISIE transient connectivity).
+- No WooCommerce pagination regression. Batch-1 cloud log for 08-31 shows
+  per-competitor counts of 5, 15, 99, 990 — no cluster at exactly 100.
+
+### Price movements
+- Still nothing. Most recent price_history row is 2026-07-30; no movement
+  window exists. Will stay this way until a local scrape runs.
+
+### GitHub Actions cloud scrape (`scrape.yml`)
+- **NEW run since last analyst pass:** 2026-08-31 08:20 UTC schedule ✅
+  (39m56s). Last 5: 08-31 ✅ · 08-24 ✅ · 08-21 dispatch ✅ · 08-21 cancelled ·
+  08-17 ❌. The two most recent scheduled runs both green; 08-10/08-17
+  failures were the resolved secret-unset pattern. Seed secret still set.
+- **STILL CRITICAL — batch 2 persists nothing. Re-confirmed on the 08-31
+  run** (3rd consecutive weekly run with this exact signature):
+  - Batch 2 step log: "Batch 2: 24 competitors to scrape" → live scrapes with
+    real hits (ORGANICA 129, PERFECT BIO 126, PUNICA 13, TVH 11, +others) →
+    "Done: 24 results" → then "✅ Exported 1303 products / Competitors: 10" —
+    the *same* 1303/10 batch 1 had already exported. Batch 2 wrote 0 products
+    and 0 `scraping_logs` rows to the DB.
+  - The published `weekly-scrape-data` release DB therefore still carries only
+    **10 of 77 competitors** (~1,300 products), silently dropping KARINA,
+    ORGANICA, PERFECT BIO, ECOVILLAGE, STÉ KINZ, MELIORA, PUNICA, TVH,
+    RIVILIA, NURESSENCE (~600 products, ~40% of catalogue).
+  - Root cause unchanged: the batch-2 workflow step is an inline
+    `python -c` that calls the pure `scrape_multiple_competitors()` (returns
+    a list, never touches the DB); all DB writes live in `manual_scrape.py`,
+    which batch 2 bypasses. Fix: give `manual_scrape.py` an `--offset` flag
+    and have batch 2 call `manual_scrape.py --offset 25` instead of the
+    one-liner. Highest priority.
+- Seed-resurrection bug (`seed_from_json.py` hardcodes `is_active=True`):
+  still unfixed. "Database already has 77 competitors — skipping seed" in the
+  08-31 log confirms the DB is carrying all 77 (incl. 24 locally-retired dead
+  sites), not the real 54 active.
+
+### Needing owner decision
+1. **CRITICAL — cloud scrape batch 2 saves nothing** (3rd consecutive weekly
+   run confirmed). `manual_scrape.py --offset` fix. Highest priority — every
+   weekly release is missing ~40% of the catalogue.
+2. **FLORAISON 350 TND wrong-price cluster** (13 products + a blog post as a
+   product). Batch-1 site so it also pollutes the cloud release. Scraper fix
+   proposed in the 08-28 section; no data mutation done.
+3. NAKAWA — parked domain, health check won't catch it; needs a manual
+   `edit_competitor.py` deactivate.
+4. ECOVILLAGE price-parsing bug — 79% of its catalogue unpriced locally;
+   batch-2 so invisible in the cloud release until #1 is fixed.
+5. BIO GATRANA / NOPAL TUNISIE — unsupported site types, not scraper bugs;
+   decide keep-tracking vs mark "no catalogue".
+6. Seed-resurrection bug in `seed_from_json.py` — still unfixed.
+7. Local DB now 33 days stale — a local scrape is still the only way to get
+   batch-2 competitors' data at all until #1 lands.
+8. Outlets pipeline fields all empty across 3,923 rows — confirm expected,
+   not lost (5th run flagging this).
+
+---
+
 ## Run: 2026-08-28
 
 ### State
