@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T19:01:08+00:00",
+  "updated_at": "2026-09-02T19:18:29+00:00",
   "rotation_cursor": 5,
   "loops": {
     "repo-closed-loop": {
@@ -20,9 +20,9 @@
     },
     "repo-genesis-loop": {
       "last_run": "2026-09-02T19:01:07+00:00",
-      "status": "running",
+      "status": "paused",
       "consecutive_failures": 0,
-      "notes": "OWNER-AUTHORIZED manual override run 2026-09-02 (out of cycle; day 14 of 28). Pause lifted by owner in-session."
+      "notes": "Paused by owner until the 2d crash test passes. One-off owner-authorized manual override run on 2026-09-02 created feed-quality-gate; pause restored afterwards — override was for that run only."
     },
     "loop-engine-digest": {
       "last_run": null,
