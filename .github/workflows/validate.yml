@@ -41,3 +41,11 @@ jobs:
             exit 1
           fi
           echo "clean — no pasted zero-width characters"
+
+      - name: Self-test the PR-body invisible-character guard
+        # The source grep above only covers committed files and two codepoints.
+        # check_pr_invisibles.py catches a full set of invisible/bidi/tag
+        # characters in a PR *body* (where the btc PR #45 marker actually hid,
+        # since a body is never a file). Keep its tests green so the review-loop
+        # can trust it.
+        run: python scripts/test_check_pr_invisibles.py
