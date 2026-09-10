@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-10T10:30:27+00:00",
+  "updated_at": "2026-09-10T10:32:36+00:00",
   "rotation_cursor": 3,
   "loops": {
     "repo-closed-loop": {
@@ -57,7 +57,7 @@
   },
   "merge_budget": {
     "week_iso": "2026-W37",
-    "merges_this_week": 3,
+    "merges_this_week": 4,
     "opened_this_week": 2
   }
 }
