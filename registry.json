@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-13T10:38:39+00:00",
+  "updated_at": "2026-09-14T09:24:39+00:00",
   "repos": [
     {
       "name": "analytics-service-toolkit",
@@ -58,7 +58,7 @@
       "role": "rotation",
       "created_by": "manual",
       "notes": "Has .claude/commands/improve.md — follow it as the procedure for this repo. | Tests: ./venv/bin/pytest -q (~365 tests). Lint: ./venv/bin/ruff check . Use the venv, never system python. | CONTEXT.md has a 'Load-bearing decisions (do not regress)' section — read it before any code change. | NEVER touch data/competitors_seed.json — gitignored, holds 77 real people's contact details, local-only. | data/competitors.db is gitignored. Never commit it. Open it read-only (mode=ro) unless a step requires otherwise. | NEVER run the scrapers: scripts/manual_scrape.py duplicates the GitHub Actions job; scripts/scrape_parapharmacies.py takes 8-12 hours. | REGRESSION WATCH: if several competitors report exactly 100 products, WooCommerce Store API pagination has broken. Cost ~1000 products once. Guarded by tests/test_web_scraper.py::TestStoreApiPagination. Flag loudly. | Scraper-behaviour changes cannot be verified without a live run — always leave those PRs open. | trafilatura ERROR output is cosmetic noise from the description cleaner, not a failure. Ignore it. | The sibling dir kinz-competitor-intelligence-BACKUP-2026-07-21 is the owner's revert point. Never touch it. | A GitHub Actions workflow (scrape.yml) owns data collection and publishes to a rolling weekly-scrape-data Release, not to the local db.",
-      "pushed_at": "2026-09-12T11:52:00Z",
+      "pushed_at": "2026-09-13T10:48:00Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -70,7 +70,7 @@
       "role": "rotation",
       "created_by": "manual",
       "notes": "Currently ingests SIMULATED competitor pricing; kinz-competitor-intelligence produces the real thing. That seam is a known opportunity, not a bug to silently patch. | Airflow + Postgres + FastAPI + Streamlit. Slack alerting on margin thresholds — never trigger real alerts from a test run. | FLAG 2026-09-13 (closed-loop registry refresh): visibility found PUBLIC on GitHub, was recorded private as of 2026-09-10. This loop did not change it and does not know who/what did. Not reverted by this loop (visibility changes are owner-only) — surfaced in the run report for owner review.",
-      "pushed_at": "2026-09-12T11:52:09Z",
+      "pushed_at": "2026-09-13T10:57:37Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -93,7 +93,7 @@
       "in_rotation": true,
       "role": "rotation",
       "created_by": "manual",
-      "pushed_at": "2026-09-12T11:52:35Z",
+      "pushed_at": "2026-09-13T10:49:29Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -117,7 +117,7 @@
       "role": "read-only",
       "created_by": "manual",
       "notes": "Loop Engine state repo — config, schemas, run records, findings, reports. Consumed by Claude (laptop) and Z.ai (sandbox). NOT a rotation target: it is the loops' own control plane, never open improvement PRs against it. role=read-only is the closest schema enum; treat as infra.",
-      "pushed_at": "2026-09-10T10:34:58Z",
+      "pushed_at": "2026-09-13T17:56:41Z",
       "primary_language": "Python",
       "is_archived": false
     }
