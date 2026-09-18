@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-14T09:24:39+00:00",
+  "updated_at": "2026-09-18T09:51:54+00:00",
   "repos": [
     {
       "name": "analytics-service-toolkit",
@@ -34,7 +34,7 @@
       "role": "cloud-owned",
       "created_by": "manual",
       "notes": "Owned by the cloud routine 'Kinz repo - improvement pass (every 2 days)' (trig_01FTYzTF5d7GsEuQZ3sxuebP), which has a deeper repo-specific prompt and runs regardless of whether this machine is on. Excluded here to avoid duplicate PRs. || Odoo 19 extraction is READ-ONLY. Never write back to Odoo. | Build a fresh venv; do NOT reuse any committed .venv/. See the 'Environnement Python' section of CLAUDE.md. | pip install -r requirements-dev.txt for tests/linting (it includes requirements.txt). CI runs Python 3.12. | Pipeline steps 1-3 touch the network; steps 4-5 run offline against committed data/raw/. Prefer working on 4-5. | Contains Tunisian tax-compliance logic and real business financials — treat regulatory rules as owner decisions, never 'fix' them unilaterally.",
-      "pushed_at": "2026-09-10T10:34:47Z",
+      "pushed_at": "2026-09-17T02:18:19Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -70,7 +70,7 @@
       "role": "rotation",
       "created_by": "manual",
       "notes": "Currently ingests SIMULATED competitor pricing; kinz-competitor-intelligence produces the real thing. That seam is a known opportunity, not a bug to silently patch. | Airflow + Postgres + FastAPI + Streamlit. Slack alerting on margin thresholds — never trigger real alerts from a test run. | FLAG 2026-09-13 (closed-loop registry refresh): visibility found PUBLIC on GitHub, was recorded private as of 2026-09-10. This loop did not change it and does not know who/what did. Not reverted by this loop (visibility changes are owner-only) — surfaced in the run report for owner review.",
-      "pushed_at": "2026-09-13T10:57:37Z",
+      "pushed_at": "2026-09-16T07:33:34Z",
       "primary_language": "Python",
       "is_archived": false
     },
@@ -117,7 +117,7 @@
       "role": "read-only",
       "created_by": "manual",
       "notes": "Loop Engine state repo — config, schemas, run records, findings, reports. Consumed by Claude (laptop) and Z.ai (sandbox). NOT a rotation target: it is the loops' own control plane, never open improvement PRs against it. role=read-only is the closest schema enum; treat as infra.",
-      "pushed_at": "2026-09-13T17:56:41Z",
+      "pushed_at": "2026-09-16T13:03:58Z",
       "primary_language": "Python",
       "is_archived": false
     }
