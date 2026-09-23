@@ -18,12 +18,9 @@ ROOT = Path(__file__).resolve().parent.parent
 SCHEDULE = ROOT / "schedule.json"
 
 # schedule.json name -> systemd timer unit. Loops with no unit run elsewhere.
+# Since 2026-09-23 only genesis runs from systemd; the other laptop timers are retired.
 UNITS = {
-    "repo-closed-loop": "loop-closed.timer",
-    "repo-review-loop": "loop-review.timer",
-    "repo-open-loop": "loop-open.timer",
     "repo-genesis-loop": "loop-genesis.timer",
-    "repo-backlog-refresh": "loop-backlog.timer",
 }
 
 
@@ -47,7 +44,9 @@ def main() -> None:
                 notes.append(f"{name}: config says enabled, timer is {actual}")
         else:
             # Cloud routines and in-app tasks have no local timer to inspect.
-            enabled = "yes (cloud)" if t["agent"].endswith("cloud") else "yes (in-app)"
+            where = "cloud" if t["agent"].endswith("cloud") else (
+                "z.ai" if t["agent"].startswith("zai") else "in-app")
+            enabled = f"yes ({where})" if t.get("enabled") else f"NO ({where})"
 
         rows.append([
             name,

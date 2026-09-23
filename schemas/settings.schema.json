@@ -8,17 +8,21 @@
     "version": { "type": "integer", "minimum": 1 },
     "merge_policy": {
       "type": "object",
-      "required": ["auto_merge_cap_per_run", "auto_merge_weekly_cap",
-                    "stale_pr_days", "max_pr_diff_lines", "forbidden_paths"],
+      "description": "Owner decision 2026-09-23: no merge caps. What stays is what keeps CI meaningful.",
+      "required": ["auto_merge", "require_ci_passed", "protected_paths", "never_weaken_tests"],
       "properties": {
-        "auto_merge_cap_per_run": { "type": "integer", "minimum": 0, "maximum": 10 },
-        "auto_merge_weekly_cap": { "type": "integer", "minimum": 0, "maximum": 20 },
-        "budget_reset": { "enum": ["monday_00:00_local"] },
-        "budget_source": { "enum": ["github_truth", "state_counter"] },
-        "budget_counts": { "enum": ["agent_marker_prs_only", "all_auto_merges"] },
-        "stale_pr_days": { "type": "integer", "minimum": 1 },
-        "max_pr_diff_lines": { "type": "integer", "minimum": 1 },
-        "forbidden_paths": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        "auto_merge": { "type": "boolean" },
+        "merge_method": { "enum": ["squash", "merge", "rebase"] },
+        "require_ci_passed": { "const": true },
+        "protected_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "contains": { "const": ".github/workflows/**" }
+        },
+        "protected_paths_rule": { "type": "string" },
+        "never_weaken_tests": { "const": true },
+        "stale_pr_days": { "type": "integer", "minimum": 1 }
       }
     },
     "rotation_policy": {
@@ -35,13 +39,6 @@
         "min_days_between_runs": { "type": "integer", "minimum": 7 },
         "duplicate_guard_days": { "type": "integer", "minimum": 1 },
         "stale_lease_hours": { "type": "integer", "minimum": 1 }
-      }
-    },
-    "markers": {
-      "type": "object",
-      "required": ["agents"],
-      "properties": {
-        "agents": { "type": "array", "minItems": 1, "items": { "enum": ["claude", "z-ai"] } }
       }
     },
     "review": {

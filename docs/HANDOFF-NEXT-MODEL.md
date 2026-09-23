@@ -1,5 +1,12 @@
 # Handoff: the loop engine, and what to do with it next
 
+> **Historical, 2026-09-23.** This handoff was acted on the same day. The setup it describes
+> was replaced: most loops moved to claude.ai routines, with no merge caps, no markers, and
+> run records that link to their session. See `README.md` for the current setup. Two
+> corrections to §4: the "byte-identical commit pairs" were single runs writing two files
+> through the contents API, which makes one commit per file. And the loop sessions seen on
+> 2026-09-08 were Claude sessions on Nassim's own account, run from a local machine, not Z.ai.
+
 **Written** 2026-09-23 by Claude Opus 5, for the next model that picks this up.
 **Owner** Nassim (`nassim0014`). **Read this whole file before touching anything.**
 
@@ -92,7 +99,7 @@ counter in a local file is structurally incapable of being right. Recompute from
 **The agent must not be able to edit the gate that judges it.** `.github/workflows/**` is
 in `forbidden_paths` for exactly this reason.
 
-**Zero-width markers are built in code, never pasted.** `"⁠​"`. CI fails on any
+**Zero-width markers are built in code, never pasted.** `"\u2060\u200b"`. CI fails on any
 literal zero-width character in source. I violated this once by pasting them, which is why
 the CI gate exists.
 

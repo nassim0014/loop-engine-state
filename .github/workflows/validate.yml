@@ -30,6 +30,14 @@ jobs:
         # repo, which is more than this workflow should hold.
         run: python scripts/validate_config.py --runs
 
+      - name: Calendar tests, and calendar matches schedule.json
+        run: |
+          python scripts/test_make_ics.py
+          python scripts/make_ics.py --check
+
+      - name: Three-way merge regression test
+        run: python scripts/test_three_way.py
+
       - name: Assert no literal zero-width characters in source
         # Markers must be BUILT in code, never pasted. A pasted zero-width char
         # is invisible in review and gets silently stripped by editors and

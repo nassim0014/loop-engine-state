@@ -1,45 +1,100 @@
 {
-  "version": 1,
+  "version": 2,
   "timezone_default": "Africa/Tunis",
+  "calendar_start": "2026-09-24",
   "loops": [
     {
-      "name": "repo-closed-loop",
-      "agent": "claude-laptop",
-      "schedule": "17 10 * * *",
+      "name": "cloud-maintenance",
+      "title": "Loop: maintenance",
+      "agent": "claude-cloud",
+      "schedule": "15 16 * * *",
       "schedule_kind": "cron",
       "timezone": "Africa/Tunis",
       "enabled": true,
       "paused_until": null,
       "writes_prs": true,
       "merges": true,
-      "purpose": "Work the top backlog item on N repos by rotation; open PRs."
+      "purpose": "Merge green dependency updates and green agent PRs, fix red CI, resolve conflicts, across all repos.",
+      "prompt": "prompts/maintenance.md",
+      "trigger_id": null
     },
     {
-      "name": "repo-review-loop",
-      "agent": "claude-laptop",
-      "schedule": "13 16 * * *",
+      "name": "cloud-improvements",
+      "title": "Loop: improvements",
+      "agent": "claude-cloud",
+      "schedule": "15 10 * * 1,3,5",
       "schedule_kind": "cron",
       "timezone": "Africa/Tunis",
       "enabled": true,
       "paused_until": null,
       "writes_prs": true,
       "merges": true,
-      "purpose": "Daily sweep + janitor: merge green PRs, triage conflicts, report red CI."
+      "purpose": "Top improvement-list item on 2 repos by rotation; refill a repo's list when it runs low. Merges when green.",
+      "prompt": "prompts/improvements.md",
+      "trigger_id": null
     },
     {
-      "name": "repo-open-loop",
-      "agent": "claude-laptop",
-      "schedule": "41 11 * * 6",
+      "name": "cloud-creative",
+      "title": "Loop: creative idea",
+      "agent": "claude-cloud",
+      "schedule": "40 11 * * 6",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": true,
+      "merges": true,
+      "purpose": "One new idea in one repo; a fresh Opus agent checks it against a goal written first. Merges if verified and green.",
+      "prompt": "prompts/creative.md",
+      "trigger_id": null
+    },
+    {
+      "name": "cloud-weekly-summary",
+      "title": "Loop: weekly summary",
+      "agent": "claude-cloud",
+      "schedule": "30 18 * * 0",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Weekly report: what merged, what failed, what never ran, what's next.",
+      "prompt": "prompts/weekly-summary.md",
+      "trigger_id": null
+    },
+    {
+      "name": "cloud-daily-commit",
+      "title": "Loop: daily commit",
+      "agent": "claude-cloud",
+      "schedule": "0 22 * * *",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": true,
+      "merges": true,
+      "purpose": "Only if nothing landed today: one small, real fix, merged when green.",
+      "prompt": "prompts/daily-commit.md",
+      "trigger_id": null
+    },
+    {
+      "name": "cloud-kinz-improvement",
+      "title": "Loop: Kinz accounting improvement",
+      "agent": "claude-cloud",
+      "schedule": "0 3 */2 * *",
       "schedule_kind": "cron",
       "timezone": "Africa/Tunis",
       "enabled": true,
       "paused_until": null,
       "writes_prs": true,
       "merges": false,
-      "purpose": "Weekly experiment; parks a PR for review. Never merges."
+      "purpose": "Kinz accounting repo improvement pass; pushes a branch. Own prompt in the routine.",
+      "trigger_id": "trig_01FTYzTF5d7GsEuQZ3sxuebP"
     },
     {
       "name": "repo-genesis-loop",
+      "title": "Laptop: new repo (genesis)",
       "agent": "claude-laptop",
       "schedule": "0 14 * * 3",
       "schedule_kind": "cron",
@@ -48,22 +103,16 @@
       "paused_until": null,
       "writes_prs": false,
       "merges": false,
-      "purpose": "Every 28 days, create one new private repo coherent with the portfolio."
-    },
-    {
-      "name": "loop-engine-digest",
-      "agent": "claude-laptop",
-      "schedule": "37 18 * * 0",
-      "schedule_kind": "cron",
-      "timezone": "Africa/Tunis",
-      "enabled": true,
-      "paused_until": null,
-      "writes_prs": false,
-      "merges": false,
-      "purpose": "Weekly read-only report across all loops and repos."
+      "purpose": "Every 28 days, create one new private repo coherent with the portfolio. Stays on the laptop: cloud sessions cannot create repos.",
+      "calendar": {
+        "dtstart": "2026-10-14T14:00",
+        "rrule": "FREQ=DAILY;INTERVAL=28",
+        "note": "Timer fires weekly; the prompt's 28-day gate decides. The calendar shows only the days it acts."
+      }
     },
     {
       "name": "kinz-competitor-analyst",
+      "title": "Laptop: KINZ competitor analyst",
       "agent": "claude-laptop",
       "schedule": "0 6 * * 1,3,5",
       "schedule_kind": "cron",
@@ -72,44 +121,20 @@
       "paused_until": null,
       "writes_prs": false,
       "merges": false,
-      "purpose": "Read-only KINZ data-quality analysis; writes findings only."
+      "purpose": "Read-only KINZ data-quality analysis; writes findings only. Needs local data, so stays on the laptop."
     },
     {
-      "name": "repo-backlog-refresh",
-      "agent": "claude-laptop",
-      "schedule": "0 9 * * 6",
-      "schedule_kind": "cron",
+      "name": "zai-keep-going",
+      "title": "Z.ai: keep going",
+      "agent": "zai",
+      "schedule": "manual",
+      "schedule_kind": "natural",
       "timezone": "Africa/Tunis",
-      "enabled": true,
+      "enabled": false,
       "paused_until": null,
       "writes_prs": true,
-      "merges": false,
-      "purpose": "Weekly backlog top-up: one docs-only PR per repo."
-    },
-    {
-      "name": "cloud-kinz-improvement",
-      "agent": "zai-cloud",
-      "schedule": "0 2 */2 * *",
-      "schedule_kind": "cron",
-      "timezone": "Africa/Tunis",
-      "enabled": true,
-      "paused_until": null,
-      "writes_prs": false,
-      "merges": false,
-      "purpose": "☁️ Cloud: Kinz accounting improvement"
-    },
-    {
-      "name": "cloud-daily-commit",
-      "agent": "zai-cloud",
-      "schedule": "0 12 * * *",
-      "schedule_kind": "cron",
-      "timezone": "Africa/Tunis",
-      "enabled": true,
-      "paused_until": null,
-      "writes_prs": false,
-      "merges": false,
-      "purpose": "🟩 Cloud: Daily commit loop"
+      "merges": true,
+      "purpose": "Z.ai work session on repos where registry worked_by == 'zai'. Paused until Z.ai has its own GitHub account."
     }
-  ],
-  "updated_at": "2026-08-24T09:21:55+00:00"
+  ]
 }

@@ -3,10 +3,19 @@
   "$id": "run-record.schema.json",
   "title": "Loop Run Record",
   "type": "object",
-  "required": ["loop", "agent", "started", "ended", "status"],
+  "required": ["loop", "started", "ended", "status"],
+  "anyOf": [{ "required": ["run_url"] }, { "required": ["agent"] }],
   "properties": {
     "loop": { "type": "string" },
-    "agent": { "enum": ["claude-laptop", "zai-sandbox", "zai-cloud"] },
+    "agent": {
+      "description": "Legacy and self-reported: every laptop record said claude-laptop whoever wrote it. New records carry run_url instead.",
+      "enum": ["claude-laptop", "claude-cloud", "zai", "zai-sandbox", "zai-cloud"]
+    },
+    "run_url": {
+      "description": "Link to the session or job that did the work, so a human can check who ran it.",
+      "type": "string",
+      "pattern": "^https://(claude\\.ai/code/session_[A-Za-z0-9]+|github\\.com/.+)$"
+    },
     "started": { "type": "string", "format": "date-time" },
     "ended": { "type": "string", "format": "date-time" },
     "status": { "enum": ["success", "partial", "failed", "skipped"] },
@@ -15,6 +24,8 @@
     "prs_closed": { "type": "integer", "minimum": 0 },
     "tests_added": { "type": "integer", "minimum": 0 },
     "repos_touched": { "type": "array", "items": { "type": "string" } },
+    "pr_urls": { "type": "array", "items": { "type": "string", "pattern": "^https://github\\.com/" } },
+    "summary": { "type": "string" },
     "errors": { "type": "array", "items": { "type": "string" } }
   }
 }
