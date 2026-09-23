@@ -23,7 +23,7 @@ alert when a run fails or needs him, and a weekly summary on Sunday evening.
 | Creative idea, judged by a separate Opus agent | Sat 10:15 | Loop engine routine | if verified |
 | Daily commit, only if nothing else landed | daily 22:15 | Loop engine routine | yes |
 | Weekly summary | Sun 22:15 | Loop engine routine | no |
-| Kinz accounting improvement | 03:00 every other day | its own routine | no |
+| Kinz accounting improvement: 1-3 tested fixes | Sun, Tue, Thu 10:15 | Loop engine routine | yes |
 | New private repo (genesis), every 28 days | Wed 14:00, gated | laptop, systemd | no |
 | Z.ai keep-going | paused | Z.ai | yes |
 

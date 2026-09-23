@@ -31,10 +31,11 @@ there.
    - CI red: find the cause, fix it on the same branch, and push. After two failed fix
      attempts, if the PR is older than 7 days, close it with a comment saying why. Its
      improvement-list item stays open because the tick-off was part of the same PR.
-4. **Unmerged work without a PR.** In `kinz-accounting-analysis-*`, the Kinz routine pushes
-   `claude/auto-improve-<date>` branches without always opening PRs. For such branches from
-   the last 14 days that have no PR and are ahead of the default branch, open a PR, then treat
-   it as an agent PR. Ignore older ones.
+4. **Unmerged work without a PR.** In `kinz-accounting-analysis-*`, the old Kinz routine
+   pushed `claude/auto-improve-<date>` branches without always opening PRs. For such branches
+   from the last 14 days that have no PR and are ahead of the default branch, open a PR, then
+   treat it as an agent PR. Ignore older ones. A PR there that changes how a reported figure
+   is derived waits for Nassim (see `prompts/kinz-accounting.md`).
 5. **Default branch red.** If the latest CI run on the default branch failed and the cause is
    clear, open a fix PR and merge it when green. Otherwise report it.
 6. **No CI on pull requests.** If no workflow in the repo runs on `pull_request`, nothing

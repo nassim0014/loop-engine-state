@@ -35,7 +35,7 @@
       "in_rotation": false,
       "role": "cloud-owned",
       "created_by": "manual",
-      "notes": "Owned by the cloud routine 'Kinz repo - improvement pass (every 2 days)' (trig_01FTYzTF5d7GsEuQZ3sxuebP), which has a deeper repo-specific prompt and runs regardless of whether this machine is on. Excluded here to avoid duplicate PRs. || Odoo 19 extraction is READ-ONLY. Never write back to Odoo. | Build a fresh venv; do NOT reuse any committed .venv/. See the 'Environnement Python' section of CLAUDE.md. | pip install -r requirements-dev.txt for tests/linting (it includes requirements.txt). CI runs Python 3.12. | Pipeline steps 1-3 touch the network; steps 4-5 run offline against committed data/raw/. Prefer working on 4-5. | Contains Tunisian tax-compliance logic and real business financials — treat regulatory rules as owner decisions, never 'fix' them unilaterally.",
+      "notes": "Worked by the cloud-kinz-improvement job (prompts/kinz-accounting.md), which has a deeper repo-specific prompt. Out of the general rotation so the two jobs never work it at once. || Odoo 19 extraction is READ-ONLY. Never write back to Odoo. | Build a fresh venv; do NOT reuse any committed .venv/. See the 'Environnement Python' section of CLAUDE.md. | pip install -r requirements-dev.txt for tests/linting (it includes requirements.txt). CI runs Python 3.12. | Pipeline steps 1-3 touch the network; steps 4-5 run offline against committed data/raw/. Prefer working on 4-5. | Contains Tunisian tax-compliance logic and real business financials — treat regulatory rules as owner decisions, never 'fix' them unilaterally.",
       "pushed_at": "2026-09-23T02:18:06Z",
       "primary_language": "Python",
       "is_archived": false,

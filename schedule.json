@@ -119,15 +119,17 @@
       "name": "cloud-kinz-improvement",
       "title": "Loop: Kinz accounting improvement",
       "agent": "claude-cloud",
-      "schedule": "0 3 */2 * *",
+      "schedule": "15 10 * * 0,2,4",
       "schedule_kind": "cron",
       "timezone": "Africa/Tunis",
       "enabled": true,
       "paused_until": null,
       "writes_prs": true,
-      "merges": false,
-      "purpose": "Kinz accounting repo improvement pass; pushes a branch. Own prompt in the routine.",
-      "trigger_id": "trig_01FTYzTF5d7GsEuQZ3sxuebP"
+      "merges": true,
+      "purpose": "Kinz accounting repo improvement pass: 1-3 well-tested fixes, merged when green. Figure-changing PRs wait for Nassim.",
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "dispatched": true,
+      "prompt": "prompts/kinz-accounting.md"
     },
     {
       "name": "repo-genesis-loop",

@@ -16,6 +16,7 @@ is a reviewed commit and not an invisible edit in a settings page.
 | `cloud-creative` | Sat 10:15 | `creative.md` |
 | `cloud-daily-commit` | daily 22:15 | `daily-commit.md` |
 | `cloud-weekly-summary` | Sun 22:15, after the daily commit | `weekly-summary.md` |
+| `cloud-kinz-improvement` | Sun, Tue, Thu 10:15 | `kinz-accounting.md` |
 
 `_common.md` holds the rules every job shares: setup, the GitHub API, branch names, the
 three merge rules, the never-list, and how to finish.

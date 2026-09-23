@@ -89,12 +89,14 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cloud-kinz-improvement@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260925T030000
+DTSTART;TZID=Africa/Tunis:20260924T101500
 DURATION:PT30M
-RRULE:FREQ=MONTHLY;BYMONTHDAY=1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31
+RRULE:FREQ=WEEKLY;BYDAY=SU,TU,TH
 SUMMARY:Loop: Kinz accounting improvement
-DESCRIPTION:Kinz accounting repo improvement pass\; pushes a branch. Own pr
- ompt in the routine. Runs on: claude.ai routine. Merges: no.
+DESCRIPTION:Kinz accounting repo improvement pass: 1-3 well-tested fixes\, 
+ merged when green. Figure-changing PRs wait for Nassim. Runs on: claude.ai
+  routine. Merges: yes. Prompt: loop-engine-state/prompts/kinz-accounting.m
+ d.
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
