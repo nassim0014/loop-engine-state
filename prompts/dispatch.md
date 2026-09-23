@@ -1,7 +1,8 @@
 # Dispatcher: the "Loop engine" routine
 
-All of Nassim's cloud jobs run from one claude.ai routine. It fires at 10:15, 16:15 and
-22:15 Tunis time and runs whichever jobs are due. There is one routine instead of one per job
+All of Nassim's cloud jobs run from one claude.ai routine. It fires at 01:45 and 06:45 Tunis
+time and runs whichever jobs are due. The runs happen at night because the loops share Nassim's
+usage limit, so they should use it while he sleeps. There is one routine instead of one per job
 because repos have to be attached to a routine by hand in the claude.ai UI, and one routine
 means doing that once.
 

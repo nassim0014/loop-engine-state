@@ -11,25 +11,26 @@ In order of priority (owner, 2026-09-23):
 3. Learning how to build agent systems.
 
 The agents work on their own, merges included. Nassim hears about it in two ways: a phone
-alert when a run fails or needs him, and a weekly summary on Sunday evening.
+alert when a run fails or needs him, and a weekly summary on Monday morning.
 
 ## What runs where (times are Africa/Tunis)
 
 | Job | When | Where | Merges |
 |---|---|---|---|
-| Maintenance: dependency updates, red CI, conflicts, merge what's green | daily 16:15 | Loop engine routine | yes |
-| KINZ competitor analyst, read-only, on the fresh weekly scrape | Mon 16:15 | Loop engine routine | no |
-| Improvements: top item on 2 repos, refills improvement lists | Mon, Wed, Fri 10:15 | Loop engine routine | yes |
-| Creative idea, judged by a separate Opus agent | Sat 10:15 | Loop engine routine | if verified |
-| Daily commit, only if nothing else landed | daily 22:15 | Loop engine routine | yes |
-| Weekly summary | Sun 22:15 | Loop engine routine | no |
-| Kinz accounting improvement: 1-3 tested fixes | Sun, Tue, Thu 10:15 | Loop engine routine | yes |
+| Maintenance: dependency updates, red CI, conflicts, merge what's green | daily 01:45 | Loop engine routine | yes |
+| KINZ competitor analyst, read-only, on the fresh weekly scrape | Tue 01:45 | Loop engine routine | no |
+| Improvements: top item on 2 repos, refills improvement lists | Mon, Wed, Fri 01:45 | Loop engine routine | yes |
+| Kinz accounting improvement: 1-3 tested fixes | Sun, Tue, Thu 01:45 | Loop engine routine | yes |
+| Creative idea, judged by a separate Opus agent | Sat 01:45 | Loop engine routine | if verified |
+| Daily commit, only if nothing else landed | daily 06:45 | Loop engine routine | yes |
+| Weekly summary | Mon 06:45 | Loop engine routine | no |
 | New private repo (genesis), every 28 days | Wed 14:00, gated | laptop, systemd | no |
 | Z.ai keep-going | paused | Z.ai | yes |
 
-"Loop engine" is one claude.ai routine that fires at 10:15, 16:15 and 22:15 and runs the
-jobs that are due (`prompts/dispatch.md`). The repos are attached to that routine, so a new
-repo has to be attached there before any job can see it.
+"Loop engine" is one claude.ai routine that fires at 01:45 and 06:45 and runs the jobs that are
+due (`prompts/dispatch.md`). It runs at night because the loops share Nassim's usage limit. The
+repos are attached to that routine, so a new repo has to be attached there before any job can
+see it.
 
 Genesis stays on the laptop because cloud sessions cannot create repositories. Its prompt
 is `~/.claude/scheduled-tasks/repo-genesis-loop/SKILL.md` on the laptop, run by the
