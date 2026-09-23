@@ -35,6 +35,9 @@ jobs:
           python scripts/test_make_ics.py
           python scripts/make_ics.py --check
 
+      - name: Dispatcher tests, and every cloud job is reachable by the dispatcher
+        run: python scripts/test_due_jobs.py
+
       - name: Three-way merge regression test
         run: python scripts/test_three_way.py
 

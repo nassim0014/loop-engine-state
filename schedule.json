@@ -4,6 +4,22 @@
   "calendar_start": "2026-09-24",
   "loops": [
     {
+      "name": "cloud-dispatch",
+      "title": "Loop engine dispatcher",
+      "agent": "claude-cloud",
+      "schedule": "15 10,16,22 * * *",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "The one claude.ai routine for all cloud jobs. Fires three times a day and runs whichever jobs are due (scripts/due_jobs.py).",
+      "prompt": "prompts/dispatch.md",
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "in_calendar": false
+    },
+    {
       "name": "cloud-maintenance",
       "title": "Loop: maintenance",
       "agent": "claude-cloud",
@@ -16,7 +32,24 @@
       "merges": true,
       "purpose": "Merge green dependency updates and green agent PRs, fix red CI, resolve conflicts, across all repos.",
       "prompt": "prompts/maintenance.md",
-      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx"
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "dispatched": true
+    },
+    {
+      "name": "cloud-kinz-analyst",
+      "title": "Loop: KINZ competitor analyst",
+      "agent": "claude-cloud",
+      "schedule": "15 16 * * 1",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Read-only check of the weekly KINZ scrape data (published Monday morning); writes findings only.",
+      "prompt": "prompts/kinz-analyst.md",
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "dispatched": true
     },
     {
       "name": "cloud-improvements",
@@ -31,13 +64,14 @@
       "merges": true,
       "purpose": "Top improvement-list item on 2 repos by rotation; refill a repo's list when it runs low. Merges when green.",
       "prompt": "prompts/improvements.md",
-      "trigger_id": "trig_01AQEduvW7yb8oPvaMKoYVSj"
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "dispatched": true
     },
     {
       "name": "cloud-creative",
       "title": "Loop: creative idea",
       "agent": "claude-cloud",
-      "schedule": "40 11 * * 6",
+      "schedule": "15 10 * * 6",
       "schedule_kind": "cron",
       "timezone": "Africa/Tunis",
       "enabled": true,
@@ -46,28 +80,14 @@
       "merges": true,
       "purpose": "One new idea in one repo; a fresh Opus agent checks it against a goal written first. Merges if verified and green.",
       "prompt": "prompts/creative.md",
-      "trigger_id": "trig_011nZfCFoiPqzf2pnNHG7wGC"
-    },
-    {
-      "name": "cloud-weekly-summary",
-      "title": "Loop: weekly summary",
-      "agent": "claude-cloud",
-      "schedule": "30 18 * * 0",
-      "schedule_kind": "cron",
-      "timezone": "Africa/Tunis",
-      "enabled": true,
-      "paused_until": null,
-      "writes_prs": false,
-      "merges": false,
-      "purpose": "Weekly report: what merged, what failed, what never ran, what's next.",
-      "prompt": "prompts/weekly-summary.md",
-      "trigger_id": "trig_01HpjQ9TQSmTkbtKJy11nhem"
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "dispatched": true
     },
     {
       "name": "cloud-daily-commit",
       "title": "Loop: daily commit",
       "agent": "claude-cloud",
-      "schedule": "0 22 * * *",
+      "schedule": "15 22 * * *",
       "schedule_kind": "cron",
       "timezone": "Africa/Tunis",
       "enabled": true,
@@ -76,7 +96,24 @@
       "merges": true,
       "purpose": "Only if nothing landed today: one small, real fix, merged when green.",
       "prompt": "prompts/daily-commit.md",
-      "trigger_id": "trig_01KAmKP1V7RN3PhnCGWRKtAw"
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "dispatched": true
+    },
+    {
+      "name": "cloud-weekly-summary",
+      "title": "Loop: weekly summary",
+      "agent": "claude-cloud",
+      "schedule": "15 22 * * 0",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Weekly report: what merged, what failed, what never ran, what's next. Runs after the Sunday daily commit so it covers the whole week.",
+      "prompt": "prompts/weekly-summary.md",
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx",
+      "dispatched": true
     },
     {
       "name": "cloud-kinz-improvement",
@@ -109,21 +146,6 @@
         "rrule": "FREQ=DAILY;INTERVAL=28",
         "note": "Timer fires weekly; the prompt's 28-day gate decides. The calendar shows only the days it acts."
       }
-    },
-    {
-      "name": "cloud-kinz-analyst",
-      "title": "Loop: KINZ competitor analyst",
-      "agent": "claude-cloud",
-      "schedule": "0 11 * * 1",
-      "schedule_kind": "cron",
-      "timezone": "Africa/Tunis",
-      "enabled": true,
-      "paused_until": null,
-      "writes_prs": false,
-      "merges": false,
-      "purpose": "Read-only check of the weekly KINZ scrape data (published Monday morning); writes findings only.",
-      "prompt": "prompts/kinz-analyst.md",
-      "trigger_id": null
     },
     {
       "name": "zai-keep-going",

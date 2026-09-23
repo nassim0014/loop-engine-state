@@ -80,6 +80,11 @@
       "last_run": null,
       "status": "idle",
       "consecutive_failures": 0
+    },
+    "cloud-kinz-analyst": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
     }
   }
 }

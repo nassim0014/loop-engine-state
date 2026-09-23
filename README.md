@@ -17,19 +17,23 @@ alert when a run fails or needs him, and a weekly summary on Sunday evening.
 
 | Job | When | Where | Merges |
 |---|---|---|---|
-| Maintenance: dependency updates, red CI, conflicts, merge what's green | daily 16:15 | claude.ai routine | yes |
-| Improvements: top item on 2 repos, refills improvement lists | Mon, Wed, Fri 10:15 | claude.ai routine | yes |
-| Creative idea, judged by a separate Opus agent | Sat 11:40 | claude.ai routine | if verified |
-| Weekly summary | Sun 18:30 | claude.ai routine | no |
-| Daily commit, only if nothing else landed | daily 22:00 | claude.ai routine | yes |
-| Kinz accounting improvement | 03:00 every other day | claude.ai routine | no |
+| Maintenance: dependency updates, red CI, conflicts, merge what's green | daily 16:15 | Loop engine routine | yes |
+| KINZ competitor analyst, read-only, on the fresh weekly scrape | Mon 16:15 | Loop engine routine | no |
+| Improvements: top item on 2 repos, refills improvement lists | Mon, Wed, Fri 10:15 | Loop engine routine | yes |
+| Creative idea, judged by a separate Opus agent | Sat 10:15 | Loop engine routine | if verified |
+| Daily commit, only if nothing else landed | daily 22:15 | Loop engine routine | yes |
+| Weekly summary | Sun 22:15 | Loop engine routine | no |
+| Kinz accounting improvement | 03:00 every other day | its own routine | no |
 | New private repo (genesis), every 28 days | Wed 14:00, gated | laptop, systemd | no |
-| KINZ competitor analyst, read-only, on the fresh weekly scrape | Mon 11:00 | claude.ai routine | no |
 | Z.ai keep-going | paused | Z.ai | yes |
+
+"Loop engine" is one claude.ai routine that fires at 10:15, 16:15 and 22:15 and runs the
+jobs that are due (`prompts/dispatch.md`). The repos are attached to that routine, so a new
+repo has to be attached there before any job can see it.
 
 Genesis stays on the laptop because cloud sessions cannot create repositories. Its prompt
 is `~/.claude/scheduled-tasks/repo-genesis-loop/SKILL.md` on the laptop, run by the
-`loop-genesis` systemd timer. Everything else is a claude.ai routine.
+`loop-genesis` systemd timer.
 
 ## Files
 

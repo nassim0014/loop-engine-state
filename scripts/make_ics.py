@@ -124,6 +124,8 @@ def events(sched: dict) -> list[list[str]]:
     for l in sched["loops"]:
         if not l.get("enabled") or l.get("schedule_kind") != "cron":
             continue
+        if l.get("in_calendar") is False:
+            continue
         if l.get("timezone", "Africa/Tunis") != "Africa/Tunis":
             raise ValueError(f"{l['name']}: only Africa/Tunis is supported")
         cal = l.get("calendar")

@@ -20,7 +20,7 @@ the end of the run.
 
 ## Get the data
 
-1. Attach `kinz-competitor-intelligence` with `add_repo` (access `read`).
+1. The repo is at `/home/user/kinz-competitor-intelligence`. Use it read-only.
 2. Read the release with
    `curl -sS https://api.github.com/repos/nassim0014/kinz-competitor-intelligence/releases/tags/weekly-scrape-data`.
    Its body says when it was last updated. Find the asset named `competitors.db` and download

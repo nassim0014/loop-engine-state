@@ -81,7 +81,9 @@ def cross_checks(cfg: dict, rep: Report, root: Path) -> None:
     if len(names) != len(set(names)):
         rep.error("schedule.json: duplicate loop names")
     for l in loops:
-        if l.get("enabled") and l["name"] not in state.get("loops", {}):
+        # The dispatcher only starts other jobs; it keeps no state of its own.
+        is_dispatcher = l.get("prompt") == "prompts/dispatch.md"
+        if l.get("enabled") and not is_dispatcher and l["name"] not in state.get("loops", {}):
             rep.warn(f"state.json: no entry for enabled loop '{l['name']}'")
         if l.get("enabled") and l.get("paused_until"):
             try:

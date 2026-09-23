@@ -26,6 +26,18 @@ DESCRIPTION:Merge green dependency updates and green agent PRs\, fix red CI
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
+UID:cloud-kinz-analyst@loop-engine-state.nassim0014
+DTSTAMP:20260924T000000Z
+DTSTART;TZID=Africa/Tunis:20260928T161500
+DURATION:PT30M
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:Loop: KINZ competitor analyst
+DESCRIPTION:Read-only check of the weekly KINZ scrape data (published Monda
+ y morning)\; writes findings only. Runs on: claude.ai routine. Merges: no.
+  Prompt: loop-engine-state/prompts/kinz-analyst.md.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
 UID:cloud-improvements@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
 DTSTART;TZID=Africa/Tunis:20260925T101500
@@ -40,7 +52,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cloud-creative@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260926T114000
+DTSTART;TZID=Africa/Tunis:20260926T101500
 DURATION:PT30M
 RRULE:FREQ=WEEKLY;BYDAY=SA
 SUMMARY:Loop: creative idea
@@ -50,27 +62,28 @@ DESCRIPTION:One new idea in one repo\; a fresh Opus agent checks it against
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:cloud-weekly-summary@loop-engine-state.nassim0014
-DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260927T183000
-DURATION:PT30M
-RRULE:FREQ=WEEKLY;BYDAY=SU
-SUMMARY:Loop: weekly summary
-DESCRIPTION:Weekly report: what merged\, what failed\, what never ran\, wha
- t's next. Runs on: claude.ai routine. Merges: no. Prompt: loop-engine-stat
- e/prompts/weekly-summary.md.
-TRANSP:TRANSPARENT
-END:VEVENT
-BEGIN:VEVENT
 UID:cloud-daily-commit@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260924T220000
+DTSTART;TZID=Africa/Tunis:20260924T221500
 DURATION:PT30M
 RRULE:FREQ=DAILY
 SUMMARY:Loop: daily commit
 DESCRIPTION:Only if nothing landed today: one small\, real fix\, merged whe
  n green. Runs on: claude.ai routine. Merges: yes. Prompt: loop-engine-stat
  e/prompts/daily-commit.md.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cloud-weekly-summary@loop-engine-state.nassim0014
+DTSTAMP:20260924T000000Z
+DTSTART;TZID=Africa/Tunis:20260927T221500
+DURATION:PT30M
+RRULE:FREQ=WEEKLY;BYDAY=SU
+SUMMARY:Loop: weekly summary
+DESCRIPTION:Weekly report: what merged\, what failed\, what never ran\, wha
+ t's next. Runs after the Sunday daily commit so it covers the whole week. 
+ Runs on: claude.ai routine. Merges: no. Prompt: loop-engine-state/prompts/
+ weekly-summary.md.
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
@@ -95,18 +108,6 @@ DESCRIPTION:Every 28 days\, create one new private repo coherent with the p
  ortfolio. Stays on the laptop: cloud sessions cannot create repos. Runs on
  : laptop. Merges: no. Timer fires weekly\; the prompt's 28-day gate decide
  s. The calendar shows only the days it acts.
-TRANSP:TRANSPARENT
-END:VEVENT
-BEGIN:VEVENT
-UID:cloud-kinz-analyst@loop-engine-state.nassim0014
-DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260928T110000
-DURATION:PT30M
-RRULE:FREQ=WEEKLY;BYDAY=MO
-SUMMARY:Loop: KINZ competitor analyst
-DESCRIPTION:Read-only check of the weekly KINZ scrape data (published Monda
- y morning)\; writes findings only. Runs on: claude.ai routine. Merges: no.
-  Prompt: loop-engine-state/prompts/kinz-analyst.md.
 TRANSP:TRANSPARENT
 END:VEVENT
 END:VCALENDAR
