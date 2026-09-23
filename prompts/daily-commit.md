@@ -1,10 +1,10 @@
-# Job: daily commit (every evening)
+# Job: daily commit (every morning, 06:45)
 
 Loop name: `cloud-daily-commit`. Read `prompts/_common.md` first; everything there applies.
 
 **Goal:** Nassim's GitHub contribution graph has something every day, and each thing is a
-real improvement, not filler. This runs late in the evening so that on most days the other
-jobs have already landed something and there is nothing to do.
+real improvement, not filler. It runs at 06:45, after the night's jobs, so on most days
+something has already landed and there is nothing to do.
 
 ## Steps
 

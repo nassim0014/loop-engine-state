@@ -1,4 +1,4 @@
-# Job: weekly summary (Sunday)
+# Job: weekly summary (Monday morning)
 
 Loop name: `cloud-weekly-summary`. Read `prompts/_common.md` first; everything there applies.
 

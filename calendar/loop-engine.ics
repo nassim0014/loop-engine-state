@@ -16,7 +16,7 @@ END:VTIMEZONE
 BEGIN:VEVENT
 UID:cloud-maintenance@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260924T161500
+DTSTART;TZID=Africa/Tunis:20260924T014500
 DURATION:PT30M
 RRULE:FREQ=DAILY
 SUMMARY:Loop: maintenance
@@ -28,19 +28,19 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cloud-kinz-analyst@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260928T161500
+DTSTART;TZID=Africa/Tunis:20260929T014500
 DURATION:PT30M
-RRULE:FREQ=WEEKLY;BYDAY=MO
+RRULE:FREQ=WEEKLY;BYDAY=TU
 SUMMARY:Loop: KINZ competitor analyst
-DESCRIPTION:Read-only check of the weekly KINZ scrape data (published Monda
- y morning)\; writes findings only. Runs on: claude.ai routine. Merges: no.
-  Prompt: loop-engine-state/prompts/kinz-analyst.md.
+DESCRIPTION:Read-only check of the weekly KINZ scrape data\; runs the night
+  after Monday's scrape. Writes findings only. Runs on: claude.ai routine. 
+ Merges: no. Prompt: loop-engine-state/prompts/kinz-analyst.md.
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:cloud-improvements@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260925T101500
+DTSTART;TZID=Africa/Tunis:20260925T014500
 DURATION:PT30M
 RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR
 SUMMARY:Loop: improvements
@@ -50,9 +50,22 @@ DESCRIPTION:Top improvement-list item on 2 repos by rotation\; refill a rep
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
+UID:cloud-kinz-improvement@loop-engine-state.nassim0014
+DTSTAMP:20260924T000000Z
+DTSTART;TZID=Africa/Tunis:20260924T014500
+DURATION:PT30M
+RRULE:FREQ=WEEKLY;BYDAY=SU,TU,TH
+SUMMARY:Loop: Kinz accounting improvement
+DESCRIPTION:Kinz accounting repo improvement pass: 1-3 well-tested fixes\, 
+ merged when green. Figure-changing PRs wait for Nassim. Runs on: claude.ai
+  routine. Merges: yes. Prompt: loop-engine-state/prompts/kinz-accounting.m
+ d.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
 UID:cloud-creative@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260926T101500
+DTSTART;TZID=Africa/Tunis:20260926T014500
 DURATION:PT30M
 RRULE:FREQ=WEEKLY;BYDAY=SA
 SUMMARY:Loop: creative idea
@@ -64,39 +77,25 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cloud-daily-commit@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260924T221500
+DTSTART;TZID=Africa/Tunis:20260924T064500
 DURATION:PT30M
 RRULE:FREQ=DAILY
 SUMMARY:Loop: daily commit
 DESCRIPTION:Only if nothing landed today: one small\, real fix\, merged whe
- n green. Runs on: claude.ai routine. Merges: yes. Prompt: loop-engine-stat
- e/prompts/daily-commit.md.
+ n green. Runs after the night jobs. Runs on: claude.ai routine. Merges: ye
+ s. Prompt: loop-engine-state/prompts/daily-commit.md.
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:cloud-weekly-summary@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260927T221500
+DTSTART;TZID=Africa/Tunis:20260928T064500
 DURATION:PT30M
-RRULE:FREQ=WEEKLY;BYDAY=SU
+RRULE:FREQ=WEEKLY;BYDAY=MO
 SUMMARY:Loop: weekly summary
-DESCRIPTION:Weekly report: what merged\, what failed\, what never ran\, wha
- t's next. Runs after the Sunday daily commit so it covers the whole week. 
- Runs on: claude.ai routine. Merges: no. Prompt: loop-engine-state/prompts/
- weekly-summary.md.
-TRANSP:TRANSPARENT
-END:VEVENT
-BEGIN:VEVENT
-UID:cloud-kinz-improvement@loop-engine-state.nassim0014
-DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260924T101500
-DURATION:PT30M
-RRULE:FREQ=WEEKLY;BYDAY=SU,TU,TH
-SUMMARY:Loop: Kinz accounting improvement
-DESCRIPTION:Kinz accounting repo improvement pass: 1-3 well-tested fixes\, 
- merged when green. Figure-changing PRs wait for Nassim. Runs on: claude.ai
-  routine. Merges: yes. Prompt: loop-engine-state/prompts/kinz-accounting.m
- d.
+DESCRIPTION:Weekly report on Monday morning: what merged\, what failed\, wh
+ at never ran\, what's next. Runs on: claude.ai routine. Merges: no. Prompt
+ : loop-engine-state/prompts/weekly-summary.md.
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT

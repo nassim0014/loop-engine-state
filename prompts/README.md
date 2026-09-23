@@ -1,22 +1,22 @@
 # Cloud job prompts
 
-All cloud jobs run from **one** claude.ai routine, "Loop engine". It fires at 10:15, 16:15 and
-22:15 Tunis time and runs whichever jobs are due (`dispatch.md`, `../scripts/due_jobs.py`).
-There is one routine because repos have to be attached to a routine by hand in the claude.ai
-UI. One routine means doing that once.
+All cloud jobs run from **one** claude.ai routine, "Loop engine". It fires at 01:45 and 06:45
+Tunis time and runs whichever jobs are due (`dispatch.md`, `../scripts/due_jobs.py`). The runs
+happen at night because the loops share Nassim's usage limit. There is one routine because repos
+have to be attached to a routine by hand in the claude.ai UI, and one routine means doing that once.
 
 The routine holds only a short bootstrap. The real instructions live here, so every change
 is a reviewed commit and not an invisible edit in a settings page.
 
 | Job | When (Tunis) | Prompt |
 |---|---|---|
-| `cloud-maintenance` | daily 16:15 | `maintenance.md` |
-| `cloud-kinz-analyst` | Mon 16:15, after maintenance | `kinz-analyst.md` |
-| `cloud-improvements` | Mon, Wed, Fri 10:15 | `improvements.md` |
-| `cloud-creative` | Sat 10:15 | `creative.md` |
-| `cloud-daily-commit` | daily 22:15 | `daily-commit.md` |
-| `cloud-weekly-summary` | Sun 22:15, after the daily commit | `weekly-summary.md` |
-| `cloud-kinz-improvement` | Sun, Tue, Thu 10:15 | `kinz-accounting.md` |
+| `cloud-maintenance` | daily 01:45, first | `maintenance.md` |
+| `cloud-kinz-analyst` | Tue 01:45, the night after Monday's scrape | `kinz-analyst.md` |
+| `cloud-improvements` | Mon, Wed, Fri 01:45 | `improvements.md` |
+| `cloud-kinz-improvement` | Sun, Tue, Thu 01:45 | `kinz-accounting.md` |
+| `cloud-creative` | Sat 01:45 | `creative.md` |
+| `cloud-daily-commit` | daily 06:45, after the night jobs | `daily-commit.md` |
+| `cloud-weekly-summary` | Mon 06:45 | `weekly-summary.md` |
 
 `_common.md` holds the rules every job shares: setup, the GitHub API, branch names, the
 three merge rules, the never-list, and how to finish.

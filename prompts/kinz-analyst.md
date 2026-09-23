@@ -1,11 +1,11 @@
-# Job: KINZ competitor analyst (Monday)
+# Job: KINZ competitor analyst (Tuesday night)
 
 Loop name: `cloud-kinz-analyst`. Read `prompts/_common.md` first; everything there applies.
 
 **Goal:** a weekly, read-only check of the KINZ competitor data, so bad data is caught before
 anyone relies on it. It replaces the laptop task, which kept re-reading a local database
 frozen on 2026-07-30. This job reads the fresh data the weekly GitHub Actions scrape publishes
-every Monday morning.
+every Monday morning, so it runs the night after (Tuesday 01:45).
 
 This job changes nothing in `kinz-competitor-intelligence`. It writes only
 `findings/kci-data-quality.md` and its run record in the state repo.
