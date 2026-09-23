@@ -98,14 +98,15 @@ DESCRIPTION:Every 28 days\, create one new private repo coherent with the p
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:kinz-competitor-analyst@loop-engine-state.nassim0014
+UID:cloud-kinz-analyst@loop-engine-state.nassim0014
 DTSTAMP:20260924T000000Z
-DTSTART;TZID=Africa/Tunis:20260925T060000
+DTSTART;TZID=Africa/Tunis:20260928T110000
 DURATION:PT30M
-RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR
-SUMMARY:Laptop: KINZ competitor analyst
-DESCRIPTION:Read-only KINZ data-quality analysis\; writes findings only. Ne
- eds local data\, so stays on the laptop. Runs on: laptop. Merges: no.
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:Loop: KINZ competitor analyst
+DESCRIPTION:Read-only check of the weekly KINZ scrape data (published Monda
+ y morning)\; writes findings only. Runs on: claude.ai routine. Merges: no.
+  Prompt: loop-engine-state/prompts/kinz-analyst.md.
 TRANSP:TRANSPARENT
 END:VEVENT
 END:VCALENDAR

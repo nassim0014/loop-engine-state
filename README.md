@@ -24,11 +24,12 @@ alert when a run fails or needs him, and a weekly summary on Sunday evening.
 | Daily commit, only if nothing else landed | daily 22:00 | claude.ai routine | yes |
 | Kinz accounting improvement | 03:00 every other day | claude.ai routine | no |
 | New private repo (genesis), every 28 days | Wed 14:00, gated | laptop, systemd | no |
-| KINZ competitor analyst, read-only | Mon, Wed, Fri 06:00 | laptop, desktop app | no |
+| KINZ competitor analyst, read-only, on the fresh weekly scrape | Mon 11:00 | claude.ai routine | no |
 | Z.ai keep-going | paused | Z.ai | yes |
 
-Genesis stays on the laptop because cloud sessions cannot create repositories. The KINZ
-analyst stays there because it needs local data.
+Genesis stays on the laptop because cloud sessions cannot create repositories. Its prompt
+is `~/.claude/scheduled-tasks/repo-genesis-loop/SKILL.md` on the laptop, run by the
+`loop-genesis` systemd timer. Everything else is a claude.ai routine.
 
 ## Files
 

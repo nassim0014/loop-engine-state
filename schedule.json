@@ -16,7 +16,7 @@
       "merges": true,
       "purpose": "Merge green dependency updates and green agent PRs, fix red CI, resolve conflicts, across all repos.",
       "prompt": "prompts/maintenance.md",
-      "trigger_id": null
+      "trigger_id": "trig_012CaVXFbdpvDTL4LvwjRMMx"
     },
     {
       "name": "cloud-improvements",
@@ -31,7 +31,7 @@
       "merges": true,
       "purpose": "Top improvement-list item on 2 repos by rotation; refill a repo's list when it runs low. Merges when green.",
       "prompt": "prompts/improvements.md",
-      "trigger_id": null
+      "trigger_id": "trig_01AQEduvW7yb8oPvaMKoYVSj"
     },
     {
       "name": "cloud-creative",
@@ -46,7 +46,7 @@
       "merges": true,
       "purpose": "One new idea in one repo; a fresh Opus agent checks it against a goal written first. Merges if verified and green.",
       "prompt": "prompts/creative.md",
-      "trigger_id": null
+      "trigger_id": "trig_011nZfCFoiPqzf2pnNHG7wGC"
     },
     {
       "name": "cloud-weekly-summary",
@@ -61,7 +61,7 @@
       "merges": false,
       "purpose": "Weekly report: what merged, what failed, what never ran, what's next.",
       "prompt": "prompts/weekly-summary.md",
-      "trigger_id": null
+      "trigger_id": "trig_01HpjQ9TQSmTkbtKJy11nhem"
     },
     {
       "name": "cloud-daily-commit",
@@ -76,7 +76,7 @@
       "merges": true,
       "purpose": "Only if nothing landed today: one small, real fix, merged when green.",
       "prompt": "prompts/daily-commit.md",
-      "trigger_id": null
+      "trigger_id": "trig_01KAmKP1V7RN3PhnCGWRKtAw"
     },
     {
       "name": "cloud-kinz-improvement",
@@ -111,17 +111,19 @@
       }
     },
     {
-      "name": "kinz-competitor-analyst",
-      "title": "Laptop: KINZ competitor analyst",
-      "agent": "claude-laptop",
-      "schedule": "0 6 * * 1,3,5",
+      "name": "cloud-kinz-analyst",
+      "title": "Loop: KINZ competitor analyst",
+      "agent": "claude-cloud",
+      "schedule": "0 11 * * 1",
       "schedule_kind": "cron",
       "timezone": "Africa/Tunis",
       "enabled": true,
       "paused_until": null,
       "writes_prs": false,
       "merges": false,
-      "purpose": "Read-only KINZ data-quality analysis; writes findings only. Needs local data, so stays on the laptop."
+      "purpose": "Read-only check of the weekly KINZ scrape data (published Monday morning); writes findings only.",
+      "prompt": "prompts/kinz-analyst.md",
+      "trigger_id": null
     },
     {
       "name": "zai-keep-going",

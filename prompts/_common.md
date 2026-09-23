@@ -105,7 +105,7 @@ Never merge, edit or close PRs opened by a human, or by Z.ai (branches starting 
    }
    ```
 
-2. In `state.json`, update only your own `loops.cloud-<job>` entry: `last_run` (end time),
+2. In `state.json`, update only your own `loops.cloud-<job>` entry (create it if missing): `last_run` (end time),
    `status` (`idle`, or `failed` if the run failed), and `consecutive_failures` (0 on success,
    +1 on failure).
 3. Check: `pip install -q jsonschema && python3 scripts/validate_config.py --runs`. Fix

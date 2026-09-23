@@ -11,6 +11,7 @@ invisible edit in a settings page.
 | `cloud-creative` | Loop: creative idea | `creative.md` |
 | `cloud-weekly-summary` | Loop: weekly summary | `weekly-summary.md` |
 | `cloud-daily-commit` | Loop: daily commit | `daily-commit.md` |
+| `cloud-kinz-analyst` | Loop: KINZ competitor analyst | `kinz-analyst.md` |
 
 `_common.md` holds the rules every job shares: setup, branch names, the three merge
 rules, the never-list, and how to finish.
