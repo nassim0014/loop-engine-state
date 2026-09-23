@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-18T10:13:17+00:00",
+  "updated_at": "2026-09-23T13:10:00+00:00",
   "rotation_cursor": 0,
   "loops": {
     "repo-closed-loop": {
@@ -20,9 +20,9 @@
     },
     "repo-genesis-loop": {
       "last_run": "2026-09-02T19:01:07+00:00",
-      "status": "paused",
+      "status": "idle",
       "consecutive_failures": 0,
-      "notes": "Paused by owner until the 2d crash test passes. One-off owner-authorized manual override run on 2026-09-02 created feed-quality-gate; pause restored afterwards — override was for that run only."
+      "notes": "Unpaused by owner 2026-09-23 (explicit 'unpause' instruction). Previously paused pending the 2d crash test; owner confirmed lifting it. Next real gate is still the 28-day anchor (day 35 of 28 as of 2026-09-23, next eligible 2026-10-14) and the min_days_between_runs lease (last_run 2026-09-02, min 27d, next eligible 2026-09-29)."
     },
     "loop-engine-digest": {
       "last_run": null,
