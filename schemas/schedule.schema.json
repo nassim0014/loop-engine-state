@@ -28,6 +28,11 @@
           "purpose": { "type": "string" },
           "prompt": { "type": "string", "pattern": "^prompts/[a-z0-9-]+\\.md$" },
           "trigger_id": { "type": ["string", "null"], "pattern": "^trig_[A-Za-z0-9]+$" },
+          "dispatched": {
+            "description": "Run by the cloud-dispatch routine when due, not by a routine of its own.",
+            "type": "boolean"
+          },
+          "in_calendar": { "type": "boolean" },
           "calendar": {
             "description": "Calendar override for a gated loop that fires often but acts rarely.",
             "type": "object",

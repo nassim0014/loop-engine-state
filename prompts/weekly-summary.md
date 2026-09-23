@@ -14,14 +14,18 @@ work repos. It only writes the report to the state repo.
    records. Each expected run is one of: ran (success or partial), skipped on purpose, failed,
    or **missing** (no record at all). Missing is the important one, because it means the job
    never fired or died before writing anything. For `repo-genesis-loop`, a skipped run on a
-   non-acting day is correct.
-3. **Per repo** (all registry repos except `loop-engine-state`; attach each one, read only):
+   non-acting day is correct. Skip `cloud-dispatch` itself: it only starts the other jobs and
+   writes no record of its own.
+3. **Per repo** (all registry repos except `loop-engine-state`, read only):
    PRs merged in the window, open PRs by kind (Dependabot, agent, human), and whether the
    latest CI run on the default branch is green.
 4. **Creative judge.** Read `experiments/*.md` for this week's verdict. Also count how many
    `VERIFIED` verdicts in a row there have been. A long unbroken streak is suspicious,
    because it suggests the judge is too easy.
 5. **Next week.** The next two rotation repos, from `state.rotation_cursor`.
+6. **Repos not attached.** Compare the registry with the folders in `/home/user`. Any registry
+   repo that is missing, such as a new repo from genesis, is invisible to every job until
+   Nassim attaches it to the Loop engine routine. If one is missing, say so with `NEEDS YOU`.
 
 ## Write
 

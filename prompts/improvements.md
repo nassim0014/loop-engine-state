@@ -19,7 +19,10 @@ replaces the old closed loop and the backlog refresh.
 ## In each repo
 
 1. Read `CLAUDE.md`, `README.md`, `CONTEXT.md` if it exists, the registry note, and
-   `docs/IMPROVEMENTS.md` (the repo's improvement list).
+   `docs/IMPROVEMENTS.md` (the repo's improvement list). For `kinz-competitor-intelligence`,
+   also read the latest section of `findings/kci-data-quality.md` in the state repo. Its code
+   problems are candidates for the list. Fixes to `scrape.yml` need Nassim, because agents
+   may not edit workflows.
 2. **Refill the list if needed.** If `docs/IMPROVEMENTS.md` is missing or has fewer than 3
    open items, read the code, tests and open issues and add real findings until it has 3 to 5.
    Each item says what is wrong, why it matters, and how to check the fix. Only list things

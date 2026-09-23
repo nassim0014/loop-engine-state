@@ -13,7 +13,7 @@ there.
 
 ## For each repo
 
-1. Attach it. List open PRs with their head branch, author, draft flag and merge state.
+1. List its open PRs with their head branch, author, draft flag and merge state.
 2. **Dependency PRs** (author `dependabot[bot]`), oldest first:
    - Merge rules pass: squash-merge. Merging one often puts the next into conflict.
      Dependabot rebases on its own, so move on rather than fighting it.

@@ -41,8 +41,9 @@
     },
     "kinz-competitor-analyst": {
       "last_run": null,
-      "status": "idle",
-      "consecutive_failures": 0
+      "status": "retired",
+      "consecutive_failures": 0,
+      "notes": "Retired 2026-09-23; replaced by cloud-kinz-analyst."
     },
     "cloud-kinz-improvement": {
       "last_run": null,
@@ -76,6 +77,11 @@
       "consecutive_failures": 0
     },
     "cloud-weekly-summary": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "cloud-kinz-analyst": {
       "last_run": null,
       "status": "idle",
       "consecutive_failures": 0
