@@ -20,6 +20,10 @@
           "in_rotation": { "type": "boolean" },
           "role": { "enum": ["rotation", "bridge", "read-only", "cloud-owned"] },
           "created_by": { "enum": ["manual", "genesis-loop"] },
+          "worked_by": {
+            "description": "The one agent that starts new work here, so two agents never work the same repo. Maintenance may still merge green PRs anywhere.",
+            "enum": ["claude", "zai", "none"]
+          },
           "notes": { "type": "string" }
         }
       }

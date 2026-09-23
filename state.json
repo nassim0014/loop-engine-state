@@ -1,22 +1,25 @@
 {
-  "version": 1,
+  "version": 2,
   "updated_at": "2026-09-23T15:16:50+00:00",
   "rotation_cursor": 2,
   "loops": {
     "repo-closed-loop": {
       "last_run": "2026-09-23T15:25:00+00:00",
-      "status": "idle",
-      "consecutive_failures": 0
+      "status": "retired",
+      "consecutive_failures": 0,
+      "notes": "Retired 2026-09-23; replaced by cloud-improvements."
     },
     "repo-review-loop": {
       "last_run": null,
-      "status": "idle",
-      "consecutive_failures": 0
+      "status": "retired",
+      "consecutive_failures": 0,
+      "notes": "Retired 2026-09-23; replaced by cloud-maintenance."
     },
     "repo-open-loop": {
       "last_run": "2026-08-22T00:00:00+00:00",
-      "status": "idle",
-      "consecutive_failures": 0
+      "status": "retired",
+      "consecutive_failures": 0,
+      "notes": "Retired 2026-09-23; replaced by cloud-creative."
     },
     "repo-genesis-loop": {
       "last_run": "2026-09-02T19:01:07+00:00",
@@ -26,13 +29,15 @@
     },
     "loop-engine-digest": {
       "last_run": null,
-      "status": "idle",
-      "consecutive_failures": 0
+      "status": "retired",
+      "consecutive_failures": 0,
+      "notes": "Retired 2026-09-23; replaced by cloud-weekly-summary."
     },
     "repo-backlog-refresh": {
       "last_run": "2026-08-29T08:16:22+00:00",
-      "status": "idle",
-      "consecutive_failures": 0
+      "status": "retired",
+      "consecutive_failures": 0,
+      "notes": "Retired 2026-09-23; replaced by cloud-improvements."
     },
     "kinz-competitor-analyst": {
       "last_run": null,
@@ -51,13 +56,29 @@
     },
     "cloud-weekly-status": {
       "last_run": null,
+      "status": "retired",
+      "consecutive_failures": 0,
+      "notes": "Retired 2026-09-23; replaced by cloud-weekly-summary."
+    },
+    "cloud-maintenance": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "cloud-improvements": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "cloud-creative": {
+      "last_run": null,
+      "status": "idle",
+      "consecutive_failures": 0
+    },
+    "cloud-weekly-summary": {
+      "last_run": null,
       "status": "idle",
       "consecutive_failures": 0
     }
-  },
-  "merge_budget": {
-    "week_iso": "2026-W39",
-    "merges_this_week": 1,
-    "opened_this_week": 2
   }
 }

@@ -15,19 +15,10 @@
         "required": ["last_run", "status"],
         "properties": {
           "last_run": { "type": ["string", "null"], "format": "date-time" },
-          "status": { "enum": ["idle", "running", "done", "failed", "paused"] },
+          "status": { "enum": ["idle", "running", "done", "failed", "paused", "retired"] },
           "consecutive_failures": { "type": "integer", "minimum": 0 },
           "notes": { "type": "string" }
         }
-      }
-    },
-    "merge_budget": {
-      "type": "object",
-      "required": ["week_iso", "merges_this_week"],
-      "properties": {
-        "week_iso": { "type": "string", "pattern": "^\\d{4}-W\\d{2}$" },
-        "merges_this_week": { "type": "integer", "minimum": 0 },
-        "opened_this_week": { "type": "integer", "minimum": 0 }
       }
     }
   }

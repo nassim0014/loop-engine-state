@@ -3,13 +3,23 @@
 This repo is the **single source of truth**. Laptop and sandbox copies are cache.
 Every loop session pulls before acting and writes back before ending.
 
+What runs where is in `README.md`; the cloud jobs' instructions are in `prompts/`.
+
 ---
 
 ## 1. Write protocol — read → mutate → update with base SHA
 
-Two agents write here (Claude on the laptop, Z.ai in the sandbox) and they do not
-coordinate in real time. A blind write loses whatever the other one just did, so every
-mutation is conditional on the blob you actually read.
+Several writers share this repo: the Claude cloud jobs, the laptop's genesis and analyst,
+and Z.ai. They do not coordinate in real time. A blind write loses whatever the other one
+just did, so every mutation must be conditional on what you actually read.
+
+**Cloud jobs** use git itself as the condition: commit, then
+`git pull --rebase origin main && git push origin HEAD:main`, and retry up to 3 times.
+A push onto a moved `main` is refused, never silently applied. Run records are new files,
+so they never conflict. Each job edits only its own `loops.<name>` entry in `state.json`.
+
+**Laptop and Z.ai** use the contents API with the blob SHA, below, or `scripts/state_sync.py`,
+which does it with a three-way merge.
 
 ```bash
 # 1. read, keeping the SHA you read at
@@ -41,26 +51,21 @@ Never `git push --force` to this repo. Never edit another agent's run record.
 
 ---
 
-## 2. Branch naming — all agents
+## 2. Branch naming — who made a PR is read from its branch
 
-```
-loop/<agent>/<YYYY-MM-DD>/<item-slug>
-```
+| Prefix | Who |
+|---|---|
+| `claude/loop-<job>-<YYYYMMDD>-<slug>` | Claude cloud jobs (current) |
+| `claude/auto-improve-<YYYY-MM-DD>` | the Kinz accounting routine |
+| `loop/zai/<YYYY-MM-DD>/<slug>` | Z.ai |
+| `loop/claude/…`, `exp/…` | retired laptop loops (older PRs only) |
 
-- `<agent>` — `claude` or `zai`
-- `<item-slug>` — kebab-case, from the backlog item
-- If the name is taken, append `-2`, then `-3`, …
+The branch is structural: a PR cannot exist without the branch it was pushed from. The
+hidden zero-width marker in PR bodies is retired. It was a convention the writing agent had
+to remember, and it caused a budget miscount on 2026-08-24.
 
-Examples:
-
-```
-loop/claude/2026-08-22/fix-walk-forward-error-branches
-loop/zai/2026-08-22/cover-kpis-routes
-loop/zai/2026-08-22/cover-kpis-routes-2
-```
-
-Experiment branches from `repo-open-loop` are the one exception — they use
-`exp/<date>/<idea>` and never become PRs.
+Once Z.ai has its own GitHub account, its PRs are also told apart by author. Until then its
+commits show as `nassim0014` like everything else, so the branch prefix is the only signal.
 
 ---
 
@@ -71,16 +76,23 @@ Each loop session ends by writing `runs/<UTC-timestamp>-<loop>.json`, valid agai
 
 ```json
 {
-  "loop": "repo-closed-loop",
-  "agent": "claude-laptop",
-  "started": "2026-08-22T10:17:00+00:00",
-  "ended":   "2026-08-22T10:51:00+00:00",
+  "loop": "cloud-improvements",
+  "run_url": "https://claude.ai/code/session_01AbC...",
+  "started": "2026-09-24T09:15:02Z",
+  "ended":   "2026-09-24T09:41:40Z",
   "status":  "success",
   "prs_opened": 2, "prs_merged": 1, "prs_closed": 0, "tests_added": 5,
   "repos_touched": ["btc-llm-sentiment", "Next.js-SaaS"],
+  "pr_urls": ["https://github.com/nassim0014/btc-llm-sentiment/pull/61"],
+  "summary": "Fixed the empty-input crash in walk_forward; Next.js-SaaS PR waiting on CI.",
   "errors": []
 }
 ```
+
+`run_url` replaces the old `agent` field. Every laptop record said `claude-laptop` whoever
+actually wrote it, so the field could not answer "who did this". A session link can be
+opened and checked. Z.ai records use a link to its own job or commit instead. Old records
+with `agent` still validate.
 
 Timestamp format: `20260822T101700Z`. Validate before committing:
 
@@ -94,19 +106,18 @@ valid, useful outcome; write it rather than writing nothing.
 
 ---
 
-## 4. Merge budget — GitHub is truth, `state.json` is cache
+## 4. Merge rules — no caps, but CI must mean something
 
-`merge_budget.merges_this_week` is a **reporting cache only**. Both merging loops
-recompute the real number from GitHub at the start of every run:
+Owner decision, 2026-09-23: agents merge with no weekly or per-run cap. The merge budget,
+its cache in `state.json` and `merge_budget.py` are gone. What stays, in
+`loop-settings.json`, is what keeps CI worth trusting once merging is automatic:
 
-> agent-marker PRs merged since Monday 00:00 Africa/Tunis, summed across
-> `registry.rotation.order`.
+1. Merge only when CI ran on the PR head and every check passed. No checks means no merge.
+2. Never modify, delete or rename an existing file under `.github/workflows/`. Adding a new
+   workflow is allowed only when no existing workflow runs on pull requests.
+3. Never delete, skip or weaken a test.
 
-The budget is **global and shared** between Claude and Z.ai. A local counter cannot
-see the other agent's merges, so it is structurally incapable of being right — that is
-why the cap is enforced from GitHub and never from the number in this file.
-
-Dependabot merges and stale-closes do not count against it.
+The full wording the jobs follow is in `prompts/_common.md` §3.
 
 ---
 
@@ -114,12 +125,15 @@ Dependabot merges and stale-closes do not count against it.
 
 | Field | Owner | Others |
 |---|---|---|
-| `rotation_cursor` | `repo-closed-loop` (Claude) | read only |
+| `rotation_cursor` | `cloud-improvements` | read only |
 | `loops.<name>.*` | the named loop | read only |
-| `merge_budget` | any merging loop (cache) | recompute, don't trust |
-| `registry.json` | `repo-closed-loop` refresh | read only |
-| `loop-settings.json` | owner (human) | read only |
+| `registry.json` repo `notes` | the job working that repo | read only |
+| `registry.json` `worked_by`, `in_rotation` | owner (human) | read only |
+| `loop-settings.json`, `schedule.json`, `prompts/` | owner (human) | read only |
+| `experiments/*.md` | `cloud-creative` | append only |
+| `reports/*.md` | `cloud-weekly-summary` | read only |
 | `runs/*.json` | the loop that wrote it | append only, never edit |
 
-Z.ai may work any repo, but **never moves the cursor** — otherwise two agents advance
-it independently and the rotation silently skips repos.
+Each repo has one `worked_by` agent. Only that agent starts new work there, so Claude and
+Z.ai never race on the same repo. That replaces the old "Z.ai may work any repo" rule, which
+relied on both agents checking each other's open PRs.
