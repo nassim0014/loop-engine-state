@@ -1,0 +1,19 @@
+{
+  "loop": "cloud-kinz-improvement",
+  "run_url": "https://claude.ai/code/session_01UnwrXqfGnRZpdjmZX9e7Lv",
+  "started": "2026-09-23T21:32:06Z",
+  "ended": "2026-09-24T19:43:33Z",
+  "status": "success",
+  "prs_opened": 1,
+  "prs_merged": 1,
+  "prs_closed": 0,
+  "tests_added": 11,
+  "repos_touched": [
+    "kinz-accounting-analysis-20260623-102129"
+  ],
+  "pr_urls": [
+    "https://github.com/nassim0014/kinz-accounting-analysis-20260623-102129/pull/24"
+  ],
+  "summary": "Manual test fire of the dispatcher (run: cloud-kinz-improvement), separate from today's earlier scheduled run (PR #23). Full pytest/ruff/verify_readonly suite was clean on main before starting. An Opus subagent audit found 3 real issues; picked the highest-confidence one that does not change any reported figure: 5 generated passages (EXECUTIVE_SUMMARY priority bullet, financial_analysis.md DSO action, sales_analysis.md payment-status interpretation, regulatory_recommendations.md AR-collection block, strategic_recommendations.md estimated-impact line) kept unconditional 'collection crisis' wording regardless of the extract, contradicting build_collection_risk()'s already-tiered verdict elsewhere in the same run (on the real extract A/R is 0.00 TND, and these five said follow up on 0 TND, consider legal action, and framed a DSO reduction as freeing '~0 TND'). Added 5 tiered pure functions to report_builders.py reusing the existing ar_risk_tier(), wired them into generate_reports.py at all five sites, added unit + source-guard tests, verified by running process_data.py + generate_reports.py against the real committed extract and reading the regenerated text, then reverted the regenerated output before committing. 373 tests pass, ruff clean, read-only verifier clean, CI green, merged as PR #24 (squash). Two lower-value findings from the same audit were left for a future run: draft/cancelled Odoo sale orders inflating product_sales.csv (a figure-changing fix, would need the hold label + NEEDS YOU per the tightened rule), and a mislabelled 'Total Payments Received' figure that includes outbound supplier payments (also figure-changing) plus a stale CLAUDE.md claim about extract_shopify_orders.py being standalone. Note: the audit subagent's first attempt was terminated by an Opus session-wide rate limit (reset ~00:30 UTC) after it had already produced its full report in the hand-back message, so no retry was needed; the fix itself was done directly (no further Opus escalation) since it only threads already-correct derived values through more locations via the same established tiering pattern, not new figure derivation.",
+  "errors": []
+}
