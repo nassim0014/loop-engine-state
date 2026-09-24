@@ -51,7 +51,12 @@ says how.
 - Branch names: `claude/loop-<job>-<YYYYMMDD>-<short-slug>`, for example
   `claude/loop-improvements-20260924-fix-empty-input`. You have explicit permission to create
   and push branches with this prefix in any `nassim0014` repo attached to the routine, and to
-  push to `main` of `loop-engine-state` only (for run records and state).
+  push to `main` of `loop-engine-state` only (for run records and state). Use this prefix even
+  when a repo's own docs (such as `.claude/commands/improve.md`) name branches differently. The
+  prefix is how maintenance and the weekly summary recognise loop work, so a PR without it is
+  invisible to them.
+- Don't delete branches after merging. The session's proxy refuses branch deletion (403). That
+  is expected and harmless, so don't spend time on it.
 - Open pull requests **ready for review, not as drafts**, because a draft cannot be merged.
   The PR body says what changed, why, and how you checked it, and ends with `Run: <run link>`.
 - Nassim does not want these PRs watched. Do not subscribe to PR activity, and do not

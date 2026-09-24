@@ -34,16 +34,19 @@ there.
 4. **Unmerged work without a PR.** In `kinz-accounting-analysis-*`, the old Kinz routine
    pushed `claude/auto-improve-<date>` branches without always opening PRs. For such branches
    from the last 14 days that have no PR and are ahead of the default branch, open a PR, then
-   treat it as an agent PR. Ignore older ones. A PR there that changes how a reported figure
-   is derived waits for Nassim (see `prompts/kinz-accounting.md`).
-5. **Default branch red.** If the latest CI run on the default branch failed and the cause is
+   treat it as an agent PR. Ignore older ones.
+5. **Kinz accounting figures wait for Nassim.** In `kinz-accounting-analysis-*`, never merge a
+   PR that changes how a reported figure is derived (margins, totals, TVA, anything that ends
+   up in the reports), even when CI is green and it has no `hold` label. Add the `hold` label
+   and list it in your report. Test-only and doc-only PRs there are fine to merge.
+6. **Default branch red.** If the latest CI run on the default branch failed and the cause is
    clear, open a fix PR and merge it when green. Otherwise report it.
-6. **No CI on pull requests.** If no workflow in the repo runs on `pull_request`, nothing
+7. **No CI on pull requests.** If no workflow in the repo runs on `pull_request`, nothing
    there can ever be merged. Open one PR that adds a new workflow file running the repo's
    existing tests and lint on pull requests. Don't edit the existing workflows. This is the
    one case where adding a workflow is allowed. Merge it when its own checks pass, and name
    it in your report so Nassim knows a new check exists.
-7. Leave alone: PRs by humans, `loop/zai/` PRs, and anything labelled `hold` or `do-not-merge`.
+8. Leave alone: PRs by humans, `loop/zai/` PRs, and anything labelled `hold` or `do-not-merge`.
 
 Work across repos in parallel where you can. Push fixes everywhere first, then come back to
 merge once CI has finished, rather than waiting on each PR in turn. If time runs short, merge

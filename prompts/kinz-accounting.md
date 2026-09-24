@@ -41,8 +41,11 @@ did what.
    pytest, ruff and the read-only verifier until all pass.
 5. Commit to a `claude/loop-kinz-<YYYYMMDD>-<slug>` branch, push, open the PR, and merge it when
    CI passes and the merge rules in `_common.md` hold. A change to how a reported figure is
-   derived is the exception: leave that PR open and say `NEEDS YOU` with one line on what
-   changes in the numbers.
+   derived (margins, totals, TVA, anything that ends up in the reports) is the exception: leave
+   that PR open, add the label `hold` to it (`POST .../issues/<n>/labels` with
+   `{"labels":["hold"]}`, which also creates the label), and say `NEEDS YOU` with one line on
+   what changes in the numbers. The label is what stops maintenance from merging it. Test-only
+   and doc-only PRs are not figure changes.
 
 ## Hard boundaries
 
