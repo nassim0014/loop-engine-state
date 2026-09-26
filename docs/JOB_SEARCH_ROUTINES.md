@@ -6,7 +6,7 @@ They are recorded here so changes to them are tracked in one place.
 | Routine | Trigger id | When (Tunis) | Connectors | What it does |
 |---|---|---|---|---|
 | Veille mails candidatures | `trig_01BdqTRFx7fkRTSG2GbHuqxd` | 09:00, 13:00, 16:00 | Gmail | Labels job emails `Candidatures`; stars and flags interviews, tests and offers. Label-only. |
-| Préparation entretiens | `trig_01ToYR1iDYdJhXaCbXz8aUuj` | 09:40, 16:40 | Gmail, Notion | Turns interview invites, rejections and offers from `Candidatures` into updates on the Notion prep sheets. Marks handled threads `Prepa-entretien`. |
+| Préparation entretiens | `trig_01ToYR1iDYdJhXaCbXz8aUuj` | 09:40, 16:40 | Gmail, Notion | Pushes a phone alert for every real company response in a `Candidatures` thread, including follow-ups in threads already handled. Updates the Notion prep sheet for interviews, reschedules, tests, document requests, rejections and offers. Tags threads that got a response `Prepa-entretien` (a marker only, never used to skip). |
 
 Both routines stop after 2026-12-20.
 
