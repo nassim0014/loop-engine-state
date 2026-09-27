@@ -1,0 +1,36 @@
+{
+  "loop": "cloud-maintenance",
+  "run_url": "https://claude.ai/code/session_01SRtweejMfXv4Uh63MxvRwu",
+  "started": "2026-09-27T00:46:00Z",
+  "ended": "2026-09-27T01:35:00Z",
+  "status": "success",
+  "prs_opened": 0,
+  "prs_merged": 0,
+  "prs_closed": 2,
+  "tests_added": 0,
+  "repos_touched": [
+    "analytics-service-toolkit",
+    "btc-llm-sentiment",
+    "feed-quality-gate",
+    "kinz-competitor-intelligence",
+    "kinz-margin-guardian-pipeline",
+    "kinz-secure-commerce-hub",
+    "Next.js-SaaS",
+    "kinz-price-bridge",
+    "kinz-accounting-analysis-20260623-102129"
+  ],
+  "pr_urls": [
+    "https://github.com/nassim0014/kinz-secure-commerce-hub/pull/42",
+    "https://github.com/nassim0014/kinz-secure-commerce-hub/pull/40",
+    "https://github.com/nassim0014/kinz-secure-commerce-hub/pull/37",
+    "https://github.com/nassim0014/Next.js-SaaS/pull/87",
+    "https://github.com/nassim0014/btc-llm-sentiment/pull/55"
+  ],
+  "summary": "Swept all 9 registry repos in 3 parallel groups. Closed 2 permanently-conflicted Dependabot PRs after two failed rebase attempts each (kinz-secure-commerce-hub #42 uvicorn, Next.js-SaaS #87 next); re-sent clean @dependabot rebase requests on 2 others whose prior rebase comments were malformed (secure-commerce-hub #40, #37). Rebased btc-llm-sentiment #55 onto latest main (no force-push), clearing 2 of 3 red checks; its Docker-build check fails repo-wide on main too (Dockerfile Python 3.11 base vs shap>=3.12 requirement) so it stays unmerged. All other repos had no open PRs and green default branches. No merges were needed this run.",
+  "errors": [
+    "kinz-margin-guardian-pipeline: GitHub visibility is still public though the registry recorded it private earlier (re-confirmed 2026-09-27, previously flagged 2026-09-13) — owner-only, not changed.",
+    "kinz-price-bridge: same standing public-visibility flag, re-confirmed 2026-09-27 — owner-only, not changed.",
+    "btc-llm-sentiment: push-to-main CI's pip-audit --strict step fails with a real ResolutionImpossible across numpy/yfinance/pandas/transformers/tensorflow-cpu/scikit-learn/optuna/shap pins; needs a deliberate re-pin verified against the heavy ML stack, out of scope for this lightweight-CI job.",
+    "btc-llm-sentiment: Docker build fails on main and on PRs because requirements.txt pins shap==0.52.0 (needs Python>=3.12) while the Dockerfile builder stage is on Python 3.11 — pre-existing, previously flagged as 'don't chase', now confirmed to also be the reason PR #55 can't merge under the all-green rule."
+  ]
+}
