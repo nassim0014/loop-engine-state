@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "engine": "glm",
+  "title": "GLM loop schedule — independent of Claude's cloud jobs",
+  "timezone_default": "Africa/Tunis",
+  "calendar_start": "2026-10-01",
+  "note_schema": "Same structure as loop-engine-state/schedule.json (root), with two deltas on the glm/ branch: the agent enum is extended with \"glm\", and prompt paths live under glm/prompts/. Validated by glm/schemas/glm-schedule.schema.json. Root schedule.json is never touched.",
+  "blackout_windows_tunis": [
+    {
+      "start": "01:15",
+      "end": "03:30",
+      "reason": "Claude cloud-dispatch fires 01:45 and runs due night jobs (maintenance, improvements, kinz-accounting, creative, analyst) for up to ~60 min."
+    },
+    {
+      "start": "06:15",
+      "end": "08:30",
+      "reason": "Claude cloud-dispatch fires 06:45 and runs morning jobs (daily-commit, weekly-summary)."
+    }
+  ],
+  "conflict_guard": {
+    "claude_branch_quiet_hours": 2,
+    "skip_repo_with_open_claude_pr": true,
+    "rule": "Before any PR-writing loop: if any claude/* or loop/claude/* branch in any allowlisted repo was pushed within the last 2 hours, do read-only work only this session. Per repo: if the repo has an open PR whose head branch starts with claude/, skip that repo."
+  },
+  "loops": [
+    {
+      "name": "glm-improvement-am",
+      "title": "GLM loop: morning improvement",
+      "agent": "glm",
+      "schedule": "30 10 * * *",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": true,
+      "merges": true,
+      "purpose": "Morning improvement pass: take the top GLM-suitable backlog item(s), ship 1-2 small well-tested PRs, squash-merge when CI is green. Caps: max 2 PRs per session, max 1 per repo, zero open GLM PRs at session end.",
+      "prompt": "glm/prompts/glm-loop.md",
+      "max_prs_per_session": 2,
+      "max_prs_per_repo": 1
+    },
+    {
+      "name": "glm-improvement-pm",
+      "title": "GLM loop: afternoon improvement",
+      "agent": "glm",
+      "schedule": "30 15 * * 2,4,6",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": true,
+      "merges": true,
+      "purpose": "Second improvement slot on Tue/Thu/Sat, deliberately offset from Claude's improvements job (Mon/Wed/Fri 01:45). Same caps and contract as the morning loop; prefer repos Claude's rotation cursor is far from reaching.",
+      "prompt": "glm/prompts/glm-loop.md",
+      "max_prs_per_session": 2,
+      "max_prs_per_repo": 1
+    },
+    {
+      "name": "glm-analyst-scan",
+      "title": "GLM loop: read-only analyst",
+      "agent": "glm",
+      "schedule": "0 21 * * *",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Read-only daily scan, zero PRs anywhere: are all 8 mains green, any new open PRs, does each repo still have >= 3 GLM-suitable backlog items, any new code signals worth queueing. Writes findings to glm/findings/ and candidate items to glm/backlog.json only. Safe to run even during Claude activity.",
+      "prompt": "glm/prompts/glm-loop.md"
+    },
+    {
+      "name": "glm-backlog-refresh",
+      "title": "GLM loop: weekly backlog regeneration",
+      "agent": "glm",
+      "schedule": "0 12 * * 0",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Sunday deep scan: full regeneration of glm/backlog.json from repo docs/IMPROVEMENTS.md files, TODO/except sweeps, coverage-gap heuristics and fresh code reading. Removes done/stale items, re-scores, and records large or owner-blocked findings in glm/findings/ instead of the queue.",
+      "prompt": "glm/prompts/glm-loop.md"
+    },
+    {
+      "name": "glm-state-hygiene",
+      "title": "GLM loop: weekly state hygiene",
+      "agent": "glm",
+      "schedule": "0 20 * * 6",
+      "schedule_kind": "cron",
+      "timezone": "Africa/Tunis",
+      "enabled": true,
+      "paused_until": null,
+      "writes_prs": false,
+      "merges": false,
+      "purpose": "Saturday reconciliation: compare glm/state.json PR ledger against GitHub truth, delete GLM's own already-merged glm/* branches (best-effort, never force), verify zero open glm PRs, repair any drift between state, backlog and reality.",
+      "prompt": "glm/prompts/glm-loop.md"
+    }
+  ]
+}

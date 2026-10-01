@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "engine": "glm",
+  "updated_at": "2026-10-01T11:45:00+00:00",
+  "note": "GLM working queue. Repos' own docs/IMPROVEMENTS.md files remain canonical in-repo backlogs; this queue holds GLM's claims and GLM-found items. Verify every item against the code before working it. Priority = impact x confidence; tie-break smaller est_lines.",
+  "repos": {
+    "kinz-price-bridge": {
+      "note": "GLM's primary repo - Claude's rotation never works it (worked_by: none, in_rotation: false). All 6 in-repo backlog items are done; items below are GLM-found.",
+      "items": [
+        {"id": "GLM-PB-001", "repo": "kinz-price-bridge", "title": "Fix unbounded read + N+1 in sync_latest_prices: loads entire PriceHistory join into memory (.all(), no window fn), then one _latest_snapshot_price query per product+competitor pair (src/sync.py:87-93,106)", "type": "performance", "source": "glm-scan 2026-10-01", "files": ["src/sync.py"], "est_lines": 140, "impact": 5, "confidence": 4, "priority": 20, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Window function / GROUP BY latest-price-per-key; keep behavior identical, tests must pin current semantics first"},
+        {"id": "GLM-PB-002", "repo": "kinz-price-bridge", "title": "Silent exit path: scripts/run_sync.py main() catches non-sync Exception and returns 1 with no log line (line ~81)", "type": "robustness", "source": "glm-scan 2026-10-01", "files": ["scripts/run_sync.py"], "est_lines": 25, "impact": 3, "confidence": 5, "priority": 15, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Add log.error before return; test asserts the log"},
+        {"id": "GLM-PB-003", "repo": "kinz-price-bridge", "title": "CLAUDE.md stale: says 'expect 4 smoke tests' but suite is 36 tests / 6 files; also explain the httpx2 test-client fallback entry", "type": "docs", "source": "glm-scan 2026-10-01", "files": ["CLAUDE.md"], "est_lines": 12, "impact": 2, "confidence": 5, "priority": 10, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Docs-only PR; verify count at time of work"}
+      ]
+    },
+    "feed-quality-gate": {
+      "note": "Checks must stay pure: (df, rule) -> CheckResult, injected now, synthetic fixtures only.",
+      "items": [
+        {"id": "GLM-FQG-001", "repo": "feed-quality-gate", "title": "Implement checks.stuck_value_cluster (repo backlog #2): flag >= min_cluster_size rows per source sharing an identical value (real case: 13 products all priced exactly 350 TND)", "type": "feature", "source": "repo docs/IMPROVEMENTS.md #2", "files": ["feed_quality_gate/checks.py", "feed_quality_gate/rules.py", "rules.example.yaml"], "est_lines": 130, "impact": 5, "confidence": 4, "priority": 20, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Disabled-by-default rule pattern per per_source_completeness precedent (PR #3); document in rules.example.yaml"},
+        {"id": "GLM-FQG-002", "repo": "feed-quality-gate", "title": "Implement checks.value_range (repo backlog #3): absolute [min,max] sanity bounds + <=0 flagging with offending-row sample", "type": "feature", "source": "repo docs/IMPROVEMENTS.md #3", "files": ["feed_quality_gate/checks.py"], "est_lines": 90, "impact": 4, "confidence": 5, "priority": 20, "status": "proposed", "claimed_at": null, "pr": null, "notes": "~40-line pure function per backlog estimate"},
+        {"id": "GLM-FQG-003", "repo": "feed-quality-gate", "title": "Implement checks.non_product_row (repo backlog #4): heuristic quarantine of never-were-product rows, default severity warn", "type": "feature", "source": "repo docs/IMPROVEMENTS.md #4", "files": ["feed_quality_gate/checks.py"], "est_lines": 110, "impact": 4, "confidence": 4, "priority": 16, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Keep heuristic conservative; synthetic fixtures only"},
+        {"id": "GLM-FQG-004", "repo": "feed-quality-gate", "title": "Cover cli.py _read_feed .json/.jsonl branch + explain RulesError handler (repo backlog #11)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #11", "files": ["tests/"], "est_lines": 60, "impact": 3, "confidence": 4, "priority": 12, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Parquet branch needs pyarrow - CI installs only [dev]; cover json/jsonl unless pyarrow is present"}
+      ]
+    },
+    "analytics-service-toolkit": {
+      "note": "NO business logic, NO domain data. Public API is a contract. Claude's rotation includes this repo (cursor wraps here next).",
+      "items": [
+        {"id": "GLM-ASTK-001", "repo": "analytics-service-toolkit", "title": "Test SlackNotifier HTTP-retry-on-EXCEPTION path (alerts.py ~138-141) - the never-raises contract itself is untested (repo backlog #8)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #8", "files": ["tests/test_alerts.py"], "est_lines": 55, "impact": 4, "confidence": 5, "priority": 20, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Use fake transport/monkeypatched httpx client raising ConnectError; assert no raise + fallback result"},
+        {"id": "GLM-ASTK-002", "repo": "analytics-service-toolkit", "title": "Cover cli.py doctor Slack-config-error path + query --format json/csv branches (repo backlog #9)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #9", "files": ["tests/test_cli.py"], "est_lines": 80, "impact": 3, "confidence": 4, "priority": 12, "status": "proposed", "claimed_at": null, "pr": null, "notes": "CliRunner patterns already exist in test_cli.py"}
+      ]
+    },
+    "kinz-margin-guardian-pipeline": {
+      "note": "24 API tests legitimately skip in CI (astk private dep absent). Never trigger real Slack alerts.",
+      "items": [
+        {"id": "GLM-KMG-001", "repo": "kinz-margin-guardian-pipeline", "title": "Document 3 undocumented env knobs in .env.example: DEFAULT_ALERT_THRESHOLD_PCT, B2B_DISCOUNT_FACTOR, PRICE_RETENTION_DAYS (repo backlog #13)", "type": "docs", "source": "repo docs/IMPROVEMENTS.md #13", "files": [".env.example"], "est_lines": 12, "impact": 3, "confidence": 5, "priority": 15, "status": "proposed", "claimed_at": null, "pr": null, "notes": ".env.example is a committed template - adding documented non-secret lines is allowed"},
+        {"id": "GLM-KMG-002", "repo": "kinz-margin-guardian-pipeline", "title": "Graceful astk fallback in api/database.py (mirror the src/config.py fix, repo backlog item 11) so the 23 API tests run in CI instead of skipping with a misleading 'fastapi not installed' reason", "type": "robustness", "source": "repo docs/IMPROVEMENTS.md #11", "files": ["api/database.py"], "est_lines": 30, "impact": 4, "confidence": 3, "priority": 12, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Study config.py pattern first (PR #23); conftest skips must not be edited (test-harness) - the source-side fallback is what un-skips them; verify tests actually pass without astk before shipping"}
+      ]
+    },
+    "kinz-secure-commerce-hub": {
+      "note": "Backend tests run from repo root with CI env vars (see .github/workflows/ci.yml). 6 open dependabot PRs = coupled peer-dep cluster, owner-blocked, never touch.",
+      "items": [
+        {"id": "GLM-HUB-001", "repo": "kinz-secure-commerce-hub", "title": "Cover src/pipeline/jobs/scheduler.py 0% coverage with mocked APScheduler tests (repo backlog item 6)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #6", "files": ["tests/backend/"], "est_lines": 120, "impact": 4, "confidence": 4, "priority": 16, "status": "proposed", "claimed_at": null, "pr": null, "notes": "24/24 lines missed today; mock APScheduler, no real DB"},
+        {"id": "GLM-HUB-002", "repo": "kinz-secure-commerce-hub", "title": "Cover run_etl.py remaining branches: extract_* FileNotFoundError, missing-columns ValueError, transform_sales warning branch, load(), run() (~57% today)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #6", "files": ["tests/backend/"], "est_lines": 110, "impact": 4, "confidence": 4, "priority": 16, "status": "proposed", "claimed_at": null, "pr": null, "notes": "tmp_path fixtures with CSVs; margin_pct -inf bug already fixed (PR #62) - do not regress it"}
+      ]
+    },
+    "btc-llm-sentiment": {
+      "note": "LIGHT CI env only (no torch/tf install). Docker+Security CI jobs red on main from shap/numpy pin conflict - owner-blocked, pre-existing.",
+      "items": [
+        {"id": "GLM-BTC-001", "repo": "btc-llm-sentiment", "title": "Direct tests for safe_load_pickle() restricted unpickler + SHA-256 (src/utils/safe_pickle.py) - no direct test and no callers (repo backlog #13)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #13", "files": ["tests/"], "est_lines": 60, "impact": 3, "confidence": 5, "priority": 15, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Test rejects unsafe builtins/dunder paths, accepts benign payload, verifies hash mismatch behavior; one pre-existing ruff F401 on main is NOT yours"}
+      ]
+    },
+    "kinz-competitor-intelligence": {
+      "note": "PRIVATE. Use ./venv/bin/pytest -q. Read CONTEXT.md load-bearing decisions first. Never run scrapers, never touch data/competitors_seed.json or BACKUP dirs. Scraper-behavior changes are out of scope for GLM (their PRs must stay open).",
+      "items": [
+        {"id": "GLM-KCI-001", "repo": "kinz-competitor-intelligence", "title": "Cover src/database.py migration error branch (duplicate-column vs database-locked, lines ~372-388) (repo backlog item 13)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #13", "files": ["tests/"], "est_lines": 80, "impact": 4, "confidence": 4, "priority": 16, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Two distinct error shapes need distinct handling - pin both with sqlite tmp DBs"},
+        {"id": "GLM-KCI-002", "repo": "kinz-competitor-intelligence", "title": "Cover dashboard/tabs/social.py save_social_handles() write path (0% today; the only dashboard path creating Competitor rows from free text; corruption risk) (repo backlog item 12)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #12", "files": ["tests/"], "est_lines": 150, "impact": 5, "confidence": 3, "priority": 15, "status": "proposed", "claimed_at": null, "pr": null, "notes": "social.py at 32%; write-path = high-risk per CLAUDE.md, tests first, no behavior change"}
+      ]
+    },
+    "Next.js-SaaS": {
+      "note": "pnpm ONLY. TS strict, zero any. Public API/config = contract. Claude's improvements run lands here next (rotation_cursor=6) - deprioritize until after Claude's Friday run.",
+      "items": [
+        {"id": "GLM-NJS-001", "repo": "Next.js-SaaS", "title": "Test getOrgMembership() (src/lib/auth/org-context.ts:36-48) - the org-authorization primitive behind the previously-fixed IDOR; a dropped ACTIVE filter would reopen that bug class (repo backlog #9)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #9", "files": ["src/lib/auth/"], "est_lines": 80, "impact": 5, "confidence": 4, "priority": 20, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Include ACTIVE-filter regression + null/unknown-user paths"},
+        {"id": "GLM-NJS-002", "repo": "Next.js-SaaS", "title": "Test src/lib/billing/metering.ts: hasExceededQuota, rollupCurrentPeriod, getQuotaPercentage zero-quota NaN edge (repo backlog, 2nd #6)", "type": "test", "source": "repo docs/IMPROVEMENTS.md (2nd #6)", "files": ["src/lib/billing/"], "est_lines": 90, "impact": 4, "confidence": 4, "priority": 16, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Billing hot path - every overage charge derives from it"},
+        {"id": "GLM-NJS-003", "repo": "Next.js-SaaS", "title": "Test exportUserData() GDPR export (src/lib/gdpr/export.ts:13-119): error branches + [REDACTED] redaction (repo backlog #10)", "type": "test", "source": "repo docs/IMPROVEMENTS.md #10", "files": ["src/lib/gdpr/"], "est_lines": 100, "impact": 4, "confidence": 4, "priority": 16, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Mock prisma; assert no PII leaks unredacted"},
+        {"id": "GLM-NJS-004", "repo": "Next.js-SaaS", "title": "Test src/lib/webhooks/dispatcher.ts deliver() status transitions (repo backlog, 2nd #7)", "type": "test", "source": "repo docs/IMPROVEMENTS.md (2nd #7)", "files": ["src/lib/webhooks/"], "est_lines": 90, "impact": 3, "confidence": 4, "priority": 12, "status": "proposed", "claimed_at": null, "pr": null, "notes": "Follow existing webhook test patterns (cron webhook-retry has 7 tests)"}
+      ]
+    }
+  },
+  "excluded_owner_attention": [
+    "btc-llm-sentiment: coordinated re-pin of numpy/shap/tensorflow-cpu/pandas/scikit-learn/optuna/torch/yfinance (ResolutionImpossible; Dockerfile PYTHON_VERSION 3.11 vs shap 0.52 needing >=3.12); blocks 5 dependabot PRs",
+    "kinz-secure-commerce-hub: frontend peer-dep cluster (next 14->16, eslint 8->10, react-dom, tailwindcss 4) must land together; dependabot cannot be rebased via comments from agent sessions (mangled mentions)",
+    "Next.js-SaaS: #99 @ai-sdk/react 1.2.12->4.0.x 3-major jump fails Build+Typecheck+Lint; #95 react-select conflicted",
+    "analytics-service-toolkit: tag v0.1.0 + release + pin install line (supply-chain, owner-only); Postgres Deduplicator needs a CI service container (workflow change, owner-only)",
+    "kinz-margin-guardian-pipeline: ASTK_PAT secret for docker job (item 8); requirements pinning policy (item 7); no dependabot.yml (item 14)",
+    "kinz-competitor-intelligence: item 8a-follow-up avg_likes/avg_comments phantom fields - add-vs-drop needs owner decision; dep ceiling policy (item 14)",
+    "registry visibility drift: 4 repos recorded private in registry.json are PUBLIC on GitHub since ~2026-09-13 (flagged repeatedly by Claude's loops, never resolved) - confirm intent"
+  ]
+}

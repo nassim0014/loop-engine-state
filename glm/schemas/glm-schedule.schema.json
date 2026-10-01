@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "glm/schemas/glm-schedule.schema.json",
+  "title": "GLM Loop Schedule",
+  "description": "Same structure as the root schedule.schema.json of loop-engine-state, with two deltas for the glm/ namespace: the agent enum adds 'glm', and prompt paths point at glm/prompts/.",
+  "type": "object",
+  "required": ["version", "loops"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "engine": { "const": "glm" },
+    "title": { "type": "string" },
+    "timezone_default": { "type": "string" },
+    "calendar_start": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "note_schema": { "type": "string" },
+    "blackout_windows_tunis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["start", "end", "reason"],
+        "properties": {
+          "start": { "type": "string", "pattern": "^\\d{2}:\\d{2}$" },
+          "end": { "type": "string", "pattern": "^\\d{2}:\\d{2}$" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "conflict_guard": {
+      "type": "object",
+      "properties": {
+        "claude_branch_quiet_hours": { "type": "number" },
+        "skip_repo_with_open_claude_pr": { "type": "boolean" },
+        "rule": { "type": "string" }
+      }
+    },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "agent", "schedule", "timezone", "enabled"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^glm-[a-z][a-z0-9-]*$" },
+          "title": { "type": "string", "minLength": 1 },
+          "agent": { "const": "glm" },
+          "schedule": { "type": "string", "minLength": 1 },
+          "schedule_kind": { "enum": ["cron", "natural"] },
+          "timezone": { "type": "string" },
+          "enabled": { "type": "boolean" },
+          "paused_until": { "type": ["string", "null"] },
+          "writes_prs": { "type": "boolean" },
+          "merges": { "type": "boolean" },
+          "purpose": { "type": "string" },
+          "prompt": { "type": "string", "pattern": "^glm/prompts/[a-z0-9-]+\\.md$" },
+          "max_prs_per_session": { "type": "integer", "minimum": 1 },
+          "max_prs_per_repo": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}
