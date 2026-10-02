@@ -1,7 +1,7 @@
 {
  "version": 1,
  "engine": "glm",
- "updated_at": "2026-10-01T11:45:00+00:00",
+ "updated_at": "2026-10-02T11:04:01+00:00",
  "note": "GLM working queue - the canonical backlog since 2026-10-02 (in-repo docs/IMPROVEMENTS.md files were removed from all 8 repos that day by owner decision; their last contents are archived under glm/archive/<repo>/docs/ and remain an input to mine on refresh). Verify every item against the code before working it. Priority = impact x confidence; tie-break smaller est_lines.",
  "repos": {
   "kinz-price-bridge": {
@@ -20,8 +20,8 @@
      "impact": 5,
      "confidence": 4,
      "priority": 20,
-     "status": "proposed",
-     "claimed_at": null,
+     "status": "in_progress",
+     "claimed_at": "2026-10-02T11:04:01+00:00",
      "pr": null,
      "notes": "Window function / GROUP BY latest-price-per-key; keep behavior identical, tests must pin current semantics first"
     },

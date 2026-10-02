@@ -2,11 +2,15 @@
  "version": 1,
  "engine": "glm",
  "updated_at": "2026-10-02T09:30:00+00:00",
- "session_lock": null,
+ "session_lock": {
+  "id": "glm-20261002-improvement-am",
+  "started_at": "2026-10-02T11:04:01+00:00",
+  "loop": "glm-improvement-am"
+ },
  "loops": {
   "glm-improvement-am": {
    "last_run": null,
-   "status": "idle",
+   "status": "running",
    "consecutive_failures": 0,
    "runs": 0,
    "prs_merged_total": 0
