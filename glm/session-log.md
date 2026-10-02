@@ -39,3 +39,16 @@
   (rules 19-20), state protocol, schedule.
 - Open for the owner: git history still carries 86 old commit trailers + 4 Claude-authored
   commits; removing them needs a history rewrite + force-push, which the standing rules forbid.
+
+
+## 2026-10-02 - history purge + first improvement run (chat-triggered, owner-directed)
+
+- Owner authorized the history rewrite: filter-repo pass over all 8 repos stripped 130 trailer
+  commits, session-URL lines, claude branch segments in merge subjects and all Claude / Loop
+  Agent / Z.ai-bot author identities (remapped to the owner). 49 claude-named branches renamed,
+  content preserved. Every push force-with-lease against pre-scan hashes.
+- Side effect: Dependabot closed its own 6 stale PRs (btc 5, Next.js 1) after the bases were
+  rewritten; they regenerate on its next cycle. Hub's 6 remain open and pin pre-rewrite commits
+  until the owner resolves the peer-dep cluster.
+- First glm-improvement-am run: GLM-PB-001 merged as kinz-price-bridge#17 (window-query batch
+  of latest-price lookups, 3 regression tests, CI green, squash, branch deleted).

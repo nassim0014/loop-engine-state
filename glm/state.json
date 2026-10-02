@@ -1,19 +1,15 @@
 {
  "version": 1,
  "engine": "glm",
- "updated_at": "2026-10-02T09:30:00+00:00",
- "session_lock": {
-  "id": "glm-20261002-improvement-am",
-  "started_at": "2026-10-02T11:04:01+00:00",
-  "loop": "glm-improvement-am"
- },
+ "updated_at": "2026-10-02T11:12:05Z",
+ "session_lock": null,
  "loops": {
   "glm-improvement-am": {
-   "last_run": null,
-   "status": "running",
+   "last_run": "2026-10-02T11:12:05Z",
+   "status": "idle",
    "consecutive_failures": 0,
-   "runs": 0,
-   "prs_merged_total": 0
+   "runs": 1,
+   "prs_merged_total": 1
   },
   "glm-improvement-pm": {
    "last_run": null,
@@ -42,11 +38,11 @@
   }
  },
  "counts": {
-  "prs_opened": 8,
-  "prs_merged": 8,
+  "prs_opened": 9,
+  "prs_merged": 9,
   "prs_closed": 0,
-  "tests_added": 0,
-  "sessions": 1
+  "tests_added": 3,
+  "sessions": 2
  },
  "pr_ledger": [
   {
@@ -120,12 +116,21 @@
    "outcome": "merged",
    "title": "Housekeeping: docs and formatting cleanup",
    "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "kinz-price-bridge",
+   "number": 17,
+   "loop": "glm-improvement-am",
+   "branch": "glm/improve-20261002-price-bridge-sync-n-plus-1",
+   "outcome": "merged",
+   "title": "perf: batch latest-price lookups in sync_latest_prices",
+   "merged_at": "2026-10-02"
   }
  ],
  "repos": {
   "kinz-price-bridge": {
    "last_worked": "2026-10-02",
-   "merged_this_week": 0
+   "merged_this_week": 1
   },
   "feed-quality-gate": {
    "last_worked": "2026-10-02",

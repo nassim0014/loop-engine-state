@@ -1,0 +1,23 @@
+{
+ "loop": "owner-history-purge",
+ "started": "2026-10-02T10:30:00Z",
+ "ended": "2026-10-02T11:12:05Z",
+ "status": "success",
+ "prs_opened": 0,
+ "prs_merged": 0,
+ "prs_closed": 0,
+ "tests_added": 0,
+ "repos_touched": [
+  "kinz-competitor-intelligence",
+  "btc-llm-sentiment",
+  "kinz-margin-guardian-pipeline",
+  "kinz-secure-commerce-hub",
+  "Next.js-SaaS",
+  "kinz-price-bridge",
+  "analytics-service-toolkit",
+  "feed-quality-gate"
+ ],
+ "pr_urls": [],
+ "summary": "Owner-authorized history rewrite (filter-repo) across all 8 repos: stripped attribution trailers (Co-Authored-By Claude variants, Loop Agent, Claude-Session and Run session URLs), neutralized claude/ branch segments in merge subjects, rewrote CLAUDE.md references to repo guide, remapped Claude/Loop-Agent/Z.ai-bot author identities to the owner, normalized any smart punctuation in messages. 49 claude-named branches renamed (claude/* segments dropped, docs/add-claude-md to docs/add-repo-guide), 1 kci tag re-pointed. Nothing deleted: all branch content preserved under claude-free names; every push used force-with-lease against the pre-scan hashes. Dependabot branches were never touched, but its own automation closed 6 stale dep PRs (btc 5, Next.js 1) after their merge bases were rewritten; fresh PRs regenerate on its next cycle. Functional references kept by design (@ai-sdk/anthropic package, Claude Desktop product name). Residue: hub's 6 open dependabot branches still pin pre-rewrite commits until the owner resolves that peer-dep cluster; old PR pages keep their original commit text until GitHub garbage-collects orphaned commits.",
+ "errors": []
+}

@@ -1,0 +1,18 @@
+{
+ "loop": "glm-improvement-am",
+ "started": "2026-10-02T11:04:01Z",
+ "ended": "2026-10-02T11:12:05Z",
+ "status": "success",
+ "prs_opened": 1,
+ "prs_merged": 1,
+ "prs_closed": 0,
+ "tests_added": 3,
+ "repos_touched": [
+  "kinz-price-bridge"
+ ],
+ "pr_urls": [
+  "https://github.com/nassim0014/kinz-price-bridge/pull/17"
+ ],
+ "summary": "First GLM improvement run. Worked GLM-PB-001: sync_latest_prices loaded the entire price_history join and issued one query per product+competitor pair. Replaced both with ROW_NUMBER() window queries (one per side), behavior pinned by 3 new tests (statement-count budget, duplicate-name resolution, outlier guard vs newest snapshot). 257-line diff, ruff clean, 39/39 tests, CI green, squash-merged with plain title, branch deleted, zero open PRs.",
+ "errors": []
+}
