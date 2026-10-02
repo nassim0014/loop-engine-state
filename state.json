@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "updated_at": "2026-10-02T01:13:07+00:00",
-  "rotation_cursor": 6,
+  "updated_at": "2026-10-02T01:23:25+00:00",
+  "rotation_cursor": 1,
   "loops": {
     "repo-closed-loop": {
       "last_run": "2026-09-23T15:25:00+00:00",
@@ -67,7 +67,7 @@
       "consecutive_failures": 0
     },
     "cloud-improvements": {
-      "last_run": "2026-09-25T01:01:00Z",
+      "last_run": "2026-10-02T01:23:25Z",
       "status": "idle",
       "consecutive_failures": 0
     },
