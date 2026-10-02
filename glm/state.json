@@ -1,30 +1,160 @@
 {
-  "version": 1,
-  "engine": "glm",
-  "updated_at": "2026-10-01T11:45:00+00:00",
-  "session_lock": null,
-  "loops": {
-    "glm-improvement-am": {"last_run": null, "status": "idle", "consecutive_failures": 0, "runs": 0, "prs_merged_total": 0},
-    "glm-improvement-pm": {"last_run": null, "status": "idle", "consecutive_failures": 0, "runs": 0, "prs_merged_total": 0},
-    "glm-analyst-scan": {"last_run": null, "status": "idle", "consecutive_failures": 0, "runs": 0},
-    "glm-backlog-refresh": {"last_run": null, "status": "idle", "consecutive_failures": 0, "runs": 0},
-    "glm-state-hygiene": {"last_run": null, "status": "idle", "consecutive_failures": 0, "runs": 0}
+ "version": 1,
+ "engine": "glm",
+ "updated_at": "2026-10-02T09:30:00+00:00",
+ "session_lock": null,
+ "loops": {
+  "glm-improvement-am": {
+   "last_run": null,
+   "status": "idle",
+   "consecutive_failures": 0,
+   "runs": 0,
+   "prs_merged_total": 0
   },
-  "counts": {"prs_opened": 0, "prs_merged": 0, "prs_closed": 0, "tests_added": 0, "sessions": 0},
-  "pr_ledger": [],
-  "repos": {
-    "kinz-price-bridge": {"last_worked": null, "merged_this_week": 0},
-    "feed-quality-gate": {"last_worked": null, "merged_this_week": 0},
-    "analytics-service-toolkit": {"last_worked": null, "merged_this_week": 0},
-    "kinz-margin-guardian-pipeline": {"last_worked": null, "merged_this_week": 0},
-    "kinz-secure-commerce-hub": {"last_worked": null, "merged_this_week": 0},
-    "btc-llm-sentiment": {"last_worked": null, "merged_this_week": 0},
-    "kinz-competitor-intelligence": {"last_worked": null, "merged_this_week": 0},
-    "Next.js-SaaS": {"last_worked": null, "merged_this_week": 0}
+  "glm-improvement-pm": {
+   "last_run": null,
+   "status": "idle",
+   "consecutive_failures": 0,
+   "runs": 0,
+   "prs_merged_total": 0
   },
-  "bootstrap": {
-    "created": "2026-10-01T11:45:00+00:00",
-    "by": "GLM design session (chat), owner-commissioned",
-    "note": "Backlog seeded from the 2026-10-01 full scan of all 8 repos. See glm/findings/2026-10-01-bootstrap-scan.md."
+  "glm-analyst-scan": {
+   "last_run": null,
+   "status": "idle",
+   "consecutive_failures": 0,
+   "runs": 0
+  },
+  "glm-backlog-refresh": {
+   "last_run": null,
+   "status": "idle",
+   "consecutive_failures": 0,
+   "runs": 0
+  },
+  "glm-state-hygiene": {
+   "last_run": null,
+   "status": "idle",
+   "consecutive_failures": 0,
+   "runs": 0
   }
+ },
+ "counts": {
+  "prs_opened": 8,
+  "prs_merged": 8,
+  "prs_closed": 0,
+  "tests_added": 0,
+  "sessions": 1
+ },
+ "pr_ledger": [
+  {
+   "repo": "kinz-competitor-intelligence",
+   "number": 70,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "btc-llm-sentiment",
+   "number": 64,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "kinz-margin-guardian-pipeline",
+   "number": 26,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "kinz-secure-commerce-hub",
+   "number": 74,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "Next.js-SaaS",
+   "number": 106,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "kinz-price-bridge",
+   "number": 16,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "analytics-service-toolkit",
+   "number": 9,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  },
+  {
+   "repo": "feed-quality-gate",
+   "number": 5,
+   "loop": "owner-cleanup",
+   "branch": "glm/docs-cleanup",
+   "outcome": "merged",
+   "title": "Housekeeping: docs and formatting cleanup",
+   "merged_at": "2026-10-02"
+  }
+ ],
+ "repos": {
+  "kinz-price-bridge": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  },
+  "feed-quality-gate": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  },
+  "analytics-service-toolkit": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  },
+  "kinz-margin-guardian-pipeline": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  },
+  "kinz-secure-commerce-hub": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  },
+  "btc-llm-sentiment": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  },
+  "kinz-competitor-intelligence": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  },
+  "Next.js-SaaS": {
+   "last_worked": "2026-10-02",
+   "merged_this_week": 0
+  }
+ },
+ "bootstrap": {
+  "created": "2026-10-01T11:45:00+00:00",
+  "by": "GLM design session (chat), owner-commissioned",
+  "note": "Backlog seeded from the 2026-10-01 full scan of all 8 repos. See glm/findings/2026-10-01-bootstrap-scan.md."
+ }
 }

@@ -1,0 +1,32 @@
+{
+ "loop": "owner-cleanup",
+ "started": "2026-10-02T07:45:00Z",
+ "ended": "2026-10-02T09:30:00Z",
+ "status": "success",
+ "prs_opened": 8,
+ "prs_merged": 8,
+ "prs_closed": 0,
+ "tests_added": 0,
+ "repos_touched": [
+  "Next.js-SaaS",
+  "analytics-service-toolkit",
+  "btc-llm-sentiment",
+  "feed-quality-gate",
+  "kinz-competitor-intelligence",
+  "kinz-margin-guardian-pipeline",
+  "kinz-price-bridge",
+  "kinz-secure-commerce-hub"
+ ],
+ "pr_urls": [
+  "https://github.com/nassim0014/Next.js-SaaS/pull/106",
+  "https://github.com/nassim0014/analytics-service-toolkit/pull/9",
+  "https://github.com/nassim0014/btc-llm-sentiment/pull/64",
+  "https://github.com/nassim0014/feed-quality-gate/pull/5",
+  "https://github.com/nassim0014/kinz-competitor-intelligence/pull/70",
+  "https://github.com/nassim0014/kinz-margin-guardian-pipeline/pull/26",
+  "https://github.com/nassim0014/kinz-price-bridge/pull/16",
+  "https://github.com/nassim0014/kinz-secure-commerce-hub/pull/74"
+ ],
+ "summary": "Owner-directed AI-trace cleanup across all 8 repos, merged as 8 squash PRs (one per repo, branch glm/docs-cleanup). Removed CLAUDE.md/CONTEXT.md/context.md/.claude/ and docs/IMPROVEMENTS.md (archived under glm/archive/), standardized punctuation (em/en dashes, smart quotes, ellipsis -> plain), stripped emoji from markdown headings, regenerated the two kci Word docs, reworded 22 dead references in comments/docs. Also cleaned 354 historical PR bodies (attribution footers, Loop-Agent lines, claude.ai session links, dash swaps; pre-scrub bodies backed up at glm/archive/pr-body-backup-20261002.json). Two PRs (btc, commerce) merged with pre-existing red checks on main (Docker build / Security scans) unrelated to the docs-only diffs. Remaining, owner-decision-only: 86 commit trailers + 4 commits authored by the Claude identity in git history (fixable only via history rewrite and force-push, which the rules forbid).",
+ "errors": []
+}

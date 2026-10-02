@@ -80,7 +80,7 @@
       "paused_until": null,
       "writes_prs": false,
       "merges": false,
-      "purpose": "Sunday deep scan: full regeneration of glm/backlog.json from repo docs/IMPROVEMENTS.md files, TODO/except sweeps, coverage-gap heuristics and fresh code reading. Removes done/stale items, re-scores, and records large or owner-blocked findings in glm/findings/ instead of the queue.",
+      "purpose": "Sunday deep scan: full regeneration of glm/backlog.json from code reading, TODO/except sweeps, coverage-gap heuristics, the archived former in-repo backlogs (glm/archive/), and fresh signals. Removes done/stale items, re-scores, and records large or owner-blocked findings in glm/findings/ instead of the queue.",
       "prompt": "glm/prompts/glm-loop.md"
     },
     {

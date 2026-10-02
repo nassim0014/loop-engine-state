@@ -1,7 +1,7 @@
 # GLM Merge-Safety Contract
 
 Every rule is a hard gate. At merge time each one is re-checked literally; **any single failure
-means no merge** — the PR is closed (or fixed first, within the fix-attempt budget).
+means no merge** - the PR is closed (or fixed first, within the fix-attempt budget).
 
 ## Scope & identity
 
@@ -14,21 +14,21 @@ means no merge** — the PR is closed (or fixed first, within the fix-attempt bu
    e.g. `glm/improve-20261002-price-bridge-sync-n-plus-1`. The `glm/` prefix is the structural
    identity marker (a PR cannot exist without its branch).
 3. **No direct pushes to `main`** of any repo, ever. No pushes to `claude/*`, `loop/claude/*`,
-   `exp/*` or `dependabot/*` branches — they belong to other actors.
+   `exp/*` or `dependabot/*` branches - they belong to other actors.
 4. **No force-push, ever.** Not to shared branches, not to GLM's own branches, not to
    `glm/state`. Fix forward with new commits; rebase only local unpushed commits.
 
 ## Diff budget & protected paths
 
-5. **Diff <= 400 lines.** `git diff --shortstat origin/main...HEAD` — insertions + deletions
+5. **Diff <= 400 lines.** `git diff --shortstat origin/main...HEAD` - insertions + deletions
    combined must be <= 400. Bigger ideas go to `glm/findings/` for the owner, not into a PR.
-6. **Protected paths — never modify, rename or delete:**
-   - CI: anything under `.github/workflows/` (GLM also never *adds* a workflow file — that is an
+6. **Protected paths - never modify, rename or delete:**
+   - CI: anything under `.github/workflows/` (GLM also never *adds* a workflow file - that is an
      owner/Claude-maintenance decision);
    - lockfiles: `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `poetry.lock`, `uv.lock`,
      `Pipfile.lock`;
    - dependency manifests: `requirements*.txt`, `pyproject.toml` `[project]`/dependency
-     sections, `package.json` dependency fields — no dependency additions, bumps or pins;
+     sections, `package.json` dependency fields - no dependency additions, bumps or pins;
    - auth & secrets: `.env*` (except documented, non-secret additions to committed
      `.env.example` templates), `*.pem`, `*.key`, credentials, `secrets/`, tokens;
    - test-harness infrastructure: `conftest.py`, `pytest.ini`, `jest.config.*`,
@@ -43,7 +43,7 @@ means no merge** — the PR is closed (or fixed first, within the fix-attempt bu
 
 8. **CI green required.** Merge (squash) only when the PR head SHA has at least one check or
    status, all concluded, none failed/cancelled/timed-out/action-required. **No checks at all
-   means no merge** — instead run the repo's CI commands locally, record the result in the PR
+   means no merge** - instead run the repo's CI commands locally, record the result in the PR
    body, and leave the merge to a later session once checks exist. Poll CI at most 20 minutes.
 9. **Squash-merge only.** `PUT /repos/{owner}/{repo}/pulls/{n}/merge` with
    `{"merge_method": "squash"}`. Never merge-commit, never rebase-merge.
@@ -52,7 +52,7 @@ means no merge** — the PR is closed (or fixed first, within the fix-attempt bu
     PRs per repo per day.
 12. **Zero open PRs at session end.** Every PR GLM opened this session is squash-merged or
     closed (with the reason recorded in `glm/backlog.json` and the run record) before the session
-    ends. Exception: none — if CI is still running at session end, wait for it (within the
+    ends. Exception: none - if CI is still running at session end, wait for it (within the
     20-minute budget) or close.
 
 ## Other actors
@@ -62,13 +62,13 @@ means no merge** — the PR is closed (or fixed first, within the fix-attempt bu
     They look human-authored to you; the branch prefix tells you otherwise. Default action:
     leave them entirely alone. (Only exception: Nassim explicitly names a PR in this session's
     instructions.)
-14. **Dependabot PRs are untouchable** — they are Claude's maintenance-job territory and they
+14. **Dependabot PRs are untouchable** - they are Claude's maintenance-job territory and they
     modify manifests/lockfiles, which rule 6 forbids GLM from doing anyway.
 15. **File-overlap avoidance.** Before working a repo, list its open PRs' changed files. If an
     open PR (claude/* or dependabot/*) already touches the files you would touch, pick a
     different repo or a different item this session.
 16. **Claude timing.** No PR-writing work inside the blackout windows (01:15-03:30 and
-    06:15-08:30 Tunis) or while any `claude/*` branch shows a push newer than 2 hours —
+    06:15-08:30 Tunis) or while any `claude/*` branch shows a push newer than 2 hours -
     downgrade that session to read-only analysis.
 
 ## Repo & platform behavior
@@ -81,11 +81,21 @@ means no merge** — the PR is closed (or fixed first, within the fix-attempt bu
     databases). If a secret value appears in a diff or a file by accident: abort the work,
     close any PR containing it, delete the branch, and report to the owner **without quoting the
     value**.
+19. **No AI traces in output (owner directive 2026-10-02).** No attribution lines or
+    Co-Authored-By trailers anywhere; plain hyphens only (never em/en dashes, smart quotes,
+    ellipsis character); no emoji in markdown headings; no AI/agent/loop references in any
+    repo file, commit message, PR title, or PR body. Squash commits landing on main carry a
+    plain, human-style `commit_title` and `commit_message` (no `[glm]`, no signature).
+20. **Never create AI-assistant files in a code repo:** CLAUDE.md, CONTEXT.md, context.md,
+    AGENTS.md, `.claude/`, `.cursorrules`, GEMINI.md, `docs/IMPROVEMENTS.md`. All were removed
+    from the 8 repos on 2026-10-02 by owner decision (archived under `glm/archive/` on
+    `glm/state`). The backlog lives only in `glm/backlog.json`.
 
 ## Repo-specific hard rules (stricter rules always win)
 
-19. The repo's own `CLAUDE.md` / `CONTEXT.md` / `context.md` rules beat this contract whenever
-    they are stricter. Key per-repo rules baked into the loop prompt: never run the KINZ
+21. The per-repo rule files (CLAUDE.md / CONTEXT.md) were removed from all repos on 2026-10-02;
+    their archived copies under `glm/archive/<repo>/` on `glm/state` are reference-only and win
+    when stricter. Key per-repo rules baked into the loop prompt: never run the KINZ
     scrapers; never touch `data/competitors_seed.json` or `kinz-competitor-intelligence-BACKUP-*`;
     analytics-service-toolkit carries **no business logic and no domain data, ever**;
     feed-quality-gate checks stay pure with injected `now` and synthetic fixtures only;

@@ -8,7 +8,7 @@ GLM. GLM never pushes to `main` of `loop-engine-state`.
 
 | What | Where |
 |---|---|
-| State repo | `nassim0014/loop-engine-state` (private) |
+| State repo | `nassim0014/loop-engine-state` (public - so: no secrets, ever) |
 | GLM's branch | `glm/state` (never merged to main; a living branch) |
 | GLM's directory | `glm/` on that branch only |
 
@@ -21,7 +21,11 @@ glm/
   runs/             one JSON run record per session (<UTC-ts>-<loop>.json, append-only)
   session-log.md    append-only human-readable log, one block per session
   docs/             merge-safety-contract.md, state-protocol.md, backlog-strategy.md
-  prompts/          glm-loop.md (the trigger prompt; PAT replaced by {{GLM_PAT}})
+  prompts/          glm-loop.md (the trigger prompt; PAT replaced by {{GLM_PAT}}),
+                    claude-handoff-notice.md (what Claude was told)
+  archive/          the AI-assistant files removed from the 8 code repos on 2026-10-02
+                    (CLAUDE.md, CONTEXT.md, context.md, .claude/, docs/IMPROVEMENTS.md per
+                    repo) plus pr-body-backup-20261002.json - reference only, never edit
   schemas/          glm-schedule.schema.json (root schema + "glm" agent + glm/prompts path)
   README.md         what this namespace is, so Claude or a human stumbling on it understands
 ```
@@ -36,13 +40,13 @@ glm/
    - lock stale (>= 3 h) → override it, set your own lock, note the override in `session-log.md`.
    - no lock → set yours: `{"id": "<UTC-ts>", "started_at": "...", "loop": "<name>"}` and push
      the lock immediately, before any work (lease before work, not after).
-3. Read `glm/backlog.json`, `glm/schedule.json`, and — read-only, for context only — the root
+3. Read `glm/backlog.json`, `glm/schedule.json`, and - read-only, for context only - the root
    `registry.json` (repo notes from Claude's runs) and `state.json` (`rotation_cursor` tells you
    where Claude's improvements job will land next; never move it).
 
 ## 3. Session end (write protocol)
 
-1. Resolve every PR opened this session (merge or close) — zero open GLM PRs.
+1. Resolve every PR opened this session (merge or close) - zero open GLM PRs.
 2. Update `glm/state.json`: loop `last_run`/`status`, counters, PR ledger entries, clear
    `session_lock`.
 3. Update `glm/backlog.json` item statuses (`proposed → in_progress → done | back-to-proposed
@@ -50,7 +54,7 @@ glm/
 4. Write `glm/runs/<UTC-ts>-<loop>.json` (append-only; never edit a past record) and append one
    block to `session-log.md`.
 5. Commit `glm(<loop>): run <UTC-ts>` and `git push origin glm/state`.
-   - Push rejected (branch moved — another session or a retry): `git fetch origin &&
+   - Push rejected (branch moved - another session or a retry): `git fetch origin &&
      git rebase origin/glm/state` and retry, **max 3 times**. Never force-push.
    - Still failing → paste the run record into the final chat message and report
      `NEEDS YOU: state push refused`.
@@ -63,7 +67,7 @@ glm/
 - The PAT never appears in any committed file. The in-repo copy of the prompt uses
   `{{GLM_PAT}}`; the real token exists only in the pasted chat prompt.
 - CI on the state repo runs `validate_config.py` on every push; it validates only root files,
-  so `glm/` additions are safe — but keep every `glm/` file valid JSON/Markdown with no
+  so `glm/` additions are safe - but keep every `glm/` file valid JSON/Markdown with no
   zero-width or bidi characters (the repo's CI greps for them).
 
 ## 5. First-run genesis (if `glm/state` is missing)
