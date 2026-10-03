@@ -29,3 +29,37 @@ installed beyond the repo's lightweight test dependencies.
 6. The demo runs with `DATABASE_URL` unset and no Docker daemon or network reachable
    (true in this very sandbox) — it must not import or touch anything that requires
    Postgres, Docker, or the private `astk` package to succeed.
+
+## Verdict
+
+PR: https://github.com/nassim0014/kinz-margin-guardian-pipeline/pull/27
+Judge: fresh Opus subagent, given only the repo path, branch name, and this file's
+text (no implementation opinion from the building agent).
+
+1. PASS — `python scripts/demo.py` exits 0, prints exactly 5 named product rows.
+2. PASS — `--json` output is a 5-entry JSON list, every entry has
+   `product_name`/`b2c_margin_pct`/`b2b_margin_pct`/`b2c_alert`/`b2b_alert`.
+3. PASS — Argan Oil 100ml (26.03% B2C / 12.97% B2B) is flagged ALERT in the table,
+   and the real `format_alert_message` lines are printed for it, threshold read
+   from the real `src/config.py` default (40%).
+4. PASS — `--seed 42` run twice gave byte-identical stdout (same sha256 both
+   times); `--seed 7` gave a different hash, confirming the seed actually drives
+   the output.
+5. PASS — `pytest tests/test_demo.py -q` → 11 passed in 0.20s.
+6. PASS — ran with `DATABASE_URL` unset, `docker info` failing, sockets patched to
+   raise, and a meta-path import hook forcing `ModuleNotFoundError` for astk,
+   psycopg2, sqlalchemy, docker, airflow and requests — still exited 0 with full
+   table + alerts + JSON, and none of those modules were actually imported. (One
+   caveat noted: `src/alert_manager.py` only catches `ModuleNotFoundError`, not a
+   generic `ImportError`, for the astk fallback — pre-existing on main, not
+   touched by this PR, and irrelevant to a real missing-package environment.)
+
+Sanity checks: full suite on the branch 61 passed/2 skipped vs. 50 passed/2
+skipped on `origin/main` before this PR — exactly the 11 new tests, no existing
+test broken, skip count unchanged. `ruff check` clean.
+
+**VERDICT: VERIFIED**
+
+CI on PR #27 and the standing merge rules (CI green, no workflow file touched, no
+test weakened, not draft, no conflict, no hold label) decide whether this merges —
+checked separately before the merge decision.
