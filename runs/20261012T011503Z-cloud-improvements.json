@@ -1,0 +1,18 @@
+{
+  "loop": "cloud-improvements",
+  "run_url": "https://claude.ai/code/session_01GKhbb3oc82mjapxVj4WyZS",
+  "started": "2026-10-12T01:15:03Z",
+  "ended": "2026-10-12T01:33:15Z",
+  "status": "partial",
+  "prs_opened": 2,
+  "prs_merged": 1,
+  "prs_closed": 0,
+  "tests_added": 5,
+  "repos_touched": ["kinz-competitor-intelligence", "kinz-margin-guardian-pipeline"],
+  "pr_urls": [
+    "https://github.com/nassim0014/kinz-competitor-intelligence/pull/71",
+    "https://github.com/nassim0014/kinz-margin-guardian-pipeline/pull/28"
+  ],
+  "summary": "Picked kinz-competitor-intelligence and kinz-margin-guardian-pipeline from the rotation (cursor 3). Both had their docs/IMPROVEMENTS.md deleted by the owner in early-October cleanup commits, so both were refilled fresh with 4-5 verified findings each. kinz-margin-guardian-pipeline: fixed a hard astk import in api/database.py/api/main.py that was silently skipping all 22 tests/test_api.py tests with a misleading reason; PR #28 merged clean. kinz-competitor-intelligence: fixed the seed-resurrection bug in scripts/seed_from_json.py (is_active hardcoded True); PR #71 opened but left unmerged because its Tests check hits a confirmed pre-existing, unrelated pyarrow/numpy<2.0 ceiling break in dashboard_smoke tests -- correctly not merged per the merge rules, left for maintenance.",
+  "errors": []
+}
