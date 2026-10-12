@@ -1,0 +1,12 @@
+{
+  "loop": "cloud-weekly-summary",
+  "run_url": "https://claude.ai/code/session_01KYdsbZwcoRQubR7wWX5wmE",
+  "started": "2026-10-12T05:50:28Z",
+  "ended": "2026-10-12T05:55:28Z",
+  "status": "success",
+  "prs_opened": 0, "prs_merged": 0, "prs_closed": 0, "tests_added": 0,
+  "repos_touched": [],
+  "pr_urls": [],
+  "summary": "First real run (last_run was null). Wrote reports/weekly-2026-W42.md. Headline finding: the whole engine produced zero run records 2026-10-05 through 2026-10-07 (3-day gap, every job type missed its slot), and cloud-kinz-analyst has not run since 2026-09-23 (missed 09-30 and 10-07) independent of that gap.",
+  "errors": []
+}
