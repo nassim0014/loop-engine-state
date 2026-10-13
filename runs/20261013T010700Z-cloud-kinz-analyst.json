@@ -1,0 +1,17 @@
+{
+  "loop": "cloud-kinz-analyst",
+  "run_url": "https://claude.ai/code/session_01LR3178Y9U42PHnBDFW7JWu",
+  "started": "2026-10-13T01:07:00Z",
+  "ended": "2026-10-13T01:18:17Z",
+  "status": "success",
+  "prs_opened": 0,
+  "prs_merged": 0,
+  "prs_closed": 0,
+  "tests_added": 0,
+  "repos_touched": [],
+  "pr_urls": [],
+  "summary": "Read-only weekly check of kinz-competitor-intelligence's published scrape data. Release is 7d16h old (just under the 8-day staleness bar) at 1,255 products across 9 of 77 competitors. The batch-2 scrape persistence bug is still happening, reconfirmed for a 6th+ consecutive week (fix needs .github/workflows/scrape.yml, out of agent reach). The 2026-10-12 scheduled scrape run additionally failed outright on a recurring playwright/firefox version-drift bug before it could even test PR #71's seed-resurrection fix, so no new release went out this week. No pagination regression, no new price-movement signal (price_history still only holds a single snapshot date). Wrote the new findings/kci-data-quality.md section. One privacy near-miss self-reported by the subagent: a SELECT * join incidentally pulled a contact_person/phone/email value into its own tool-result scratchpad while checking a timestamp; it did not write it to the findings file or this report and verified it was not reused.",
+  "errors": [
+    "Privacy near-miss (not a breach): subagent's SELECT * on scraping_logs JOIN competitors incidentally surfaced one competitor's contact_person/phone/email in its own transcript; not propagated to findings file, this run record, or any output. Flagging for awareness -- future runs of this job should SELECT explicit non-PII columns only, never *, when joining the competitors table."
+  ]
+}
